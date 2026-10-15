@@ -1,0 +1,1252 @@
+/* =======================================================================================================
+                                Grundkonfiguration & Neon-Hintergrundbild
+======================================================================================================= */
+
+body {
+    margin: 0;                                  /* Entfernt den Standard-Aussenabstand des Browsers um den Body */
+    padding: 0;                                 /* Entfernt den Standard-Innenabstand des Bodys */
+    min-height: 100vh;                          /* Garantiert, dass der Body mindestens 100% der Bildschirmhoehe einnimmt */
+    display: grid;                              /* Aktiviert das CSS Grid-Layout fuer die Hauptstruktur der Seite */
+    grid-template-rows: auto 1fr auto;          /* Definiert 3 Zeilen: Oben flexibel (Header), Mitte nimmt Restplatz ein (Inhalt), Unten Footer */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../image/neon_brickwall.png'); /* Legt ein 60% schwarzes Overlay ueber das Hintergrundbild */
+    background-size: cover;                     /* Skaliert das Hintergrundbild so, dass es das gesamte Fenster lueckenlos ausfuellt */
+    background-position: center;                /* Zentriert das Hintergrundbild horizontal und vertikal */
+    background-attachment: fixed;               /* Haelts das Hintergrundbild beim Scrollen der Seite an Ort und Stelle fixiert */
+    background-repeat: no-repeat;              /* Verhindert, dass sich das Hintergrundbild kachelartig wiederholt */
+    font-family: system-ui, -apple-system, sans-serif; /* Nutzt die moderne System-Schriftart des Betriebssystems */
+    color: rgb(226, 226, 226);                  /* Setzt die Standard-Textfarbe fuer das gesamte Dokument auf ein helles Grau */
+}
+
+input, textarea {
+    font-family: inherit;                       /* Veranlasst Formularfelder, die Schriftart vom uebergeordneten Element (body) zu erben */
+    font-weight: 600;                           /* Setzt die Schriftstaerke in Eingabefeldern auf Halbfett */
+}
+
+h3 {
+    text-align: center;                         /* Zentriert alle h3 Ueberschriften */
+}
+
+p {
+    color: rgb(226, 226, 226);                  /* Legt die Standard-Textfarbe fuer alle Textabsaetze fest */
+    font-weight: 600;                           /* Setzt die Schriftstaerke fuer Textabsaetze auf Halbfett */
+}
+
+* {
+    scrollbar-width: thin;                      /* Macht die Bildlaufleiste in modernen Browsern etwas schmaler */
+    scrollbar-color: #40c9ff #0a0a0a;           /* Färbt den Scroll-Anfasser cyanblau und die Laufleiste sehr dunkel */
+}
+
+/* Flexbox-Layout: Der Inhaltsbereich dehnt sich aus, um den Footer unten zu halten */
+.main_wrapper {
+    flex: 1;                                    /* Laesst den Container im Flexbox-Grid maximal expandieren */
+    padding: 20px;                              /* Erzeugt 20px Innenabstand nach innen zu den Elementen */
+}
+
+/* Top Navigation (Header) */
+.nav_bar {
+    position: sticky;                           /* Fixiert die Menueleiste beim Scrollen oben am Bildschirmrand */
+    top: 0;                                     /* Richtet die fixierte Position am obersten Rand aus */
+    z-index: 100;                               /* Hält die Navigationsleiste ebenenmaessig ueber allen anderen Seiteninhalten */
+    display: flex;                              /* Aktiviert das Flexbox-Layout fuer die horizontale Anordnung */
+    align-items: center;                        /* Zentriert Logo und Links vertikal auf einer Hoehe */
+    justify-content: space-between;             /* Verteilt Elemente mit maximalem Abstand dazwischen (Logo links, Links rechts) */
+    padding: 5px 15px 5px;                      /* Innenabstand: 5px oben, 15px rechts/links, 5px unten */
+    background-color: rgba(0, 0, 0, 0.5);      /* 50% transparentes Schwarz als Glashintergrund */
+    backdrop-filter: blur(5px);                 /* Erzeugt den Weichzeichner-Glaseffekt fuer dahinterliegende Elemente */
+}
+
+.brand_logo_img {
+    height: 60px;                               /* Erzwingt eine feste Hoehe fuer das Firmenlogo */
+    width: auto;                                /* Bebehält das originale Seitenverhaeltnis des Logos bei */
+}
+
+.nav_left_group {
+    display: flex;                              /* Ordnet Logo und die erste Linkgruppe nebeneinander an */
+    align-items: center;                        /* Zentriert Logo und die linke Gruppe vertikal */
+    gap: 30px;                                  /* Erzeugt exakt 30px Abstand zwischen Logo und Navigationsbuttons */
+}
+
+.nav_links_container {
+    display: flex;                              /* Richtet die einzelnen Navigations-Buttons nebeneinander aus */
+    gap: 15px;                                  /* Erzeugt 15px Abstand zwischen den einzelnen Buttons */
+}
+
+/* Deine definierten Neon-Buttons (angepasst als Anchor-Tags) */
+.button_nav {
+    position: relative;                         /* Platzierbarer Bezugspunkt fuer die pseudo ::before / ::after Neon-Effekte */
+    width: 120px;                               /* Feste Breite fuer die Hauptbuttons */
+    height: 40px;                               /* Feste Hoehe fuer die Hauptbuttons */
+    background: #000;                           /* Schwarzer Innenhintergrund des Buttons */
+    display: flex;                              /* Flexbox zum perfekten Zentrieren des Button-Textes */
+    align-items: center;                        /* Zentriert den Text vertikal im Button */
+    justify-content: center;                    /* Zentriert den Text horizontal im Button */
+    color: rgb(226, 226, 226);                  /* Helle Textfarbe fuer den Button-Inhalt */
+    text-decoration: none;                      /* Entfernt die Standard-Unterstreichung von Hyperlinks */
+    font-weight: 500;                           /* Mittlere Schriftstaerke fuer lesbare Button-Beschriftung */
+    border: none;                               /* Entfernt Standard-Rahmen von Button-Elementen */
+    border-radius: 5px;                         /* Leicht abgerundete Ecken fuer den Button */
+    cursor: pointer;                            /* Aendert den Mauszeiger beim Drueberfahren auf ein Hand-Symbol */
+    box-sizing: border-box;                     /* Rechnet Border und Padding in die Gesamtabmessungen ein */
+}
+
+.button_nav::before {
+    content: '';                                /* Erzeugt das unsichtbare Pseudo-Element fuer den Neon-Rahmen */
+    position: absolute;                         /* Positioniert den Rahmen exakt ueber/unter dem Button */
+    margin: auto;                               /* Zentriert das Element automatisch */
+    width: 123px;                               /* Minimal breiter als der Hauptbutton fuer den sichtbaren Rand */
+    height: 43px;                               /* Minimal hoeher als der Hauptbutton fuer den sichtbaren Rand */
+    border-radius: 5px;                         /* Uebernimmt die Eckenrundung des Buttons */
+    background: linear-gradient(-45deg, #a100b8 0%, #0077b6 100%); /* Farbverlauf von Neon-Lila zu Cyan-Blau */
+    z-index: -10;                               /* Legt den bunten Rahmen hinter die schwarze Button-Flaeche */
+    pointer-events: none;                       /* Verhindert, dass das Pseudo-Element Maus-Klicks blockiert */
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Elastische Animation fuer Hover-Effekte */
+}
+
+.button_nav::after {
+    content: "";                                /* Erzeugt das zweite Pseudo-Element fuer den weichen Neon-Glow */
+    z-index: -1;                                /* Schichtet das Element unter den Button, aber ueber das vorherige Element */
+    position: absolute;                         /* Deckt die Flaeche des Buttons ab */
+    inset: 0;                                   /* Bündig an allen 4 Kanten des Hauptbuttons ausrichten */
+    background: linear-gradient(-45deg, #a100b8 0%, #0077b6 100%); /* Derselbe Farbverlauf fuer einheitlichen Glow */
+    transform: translate3d(0, 0, 0) scale(0.95);/* Nutzt Hardware-Beschleunigung und verkleinert das Element leicht */
+    filter: blur(10px);                         /* Weichzeichner erzeugt das leuchtende Neon-Aura-Gefuehl */
+}
+
+.button_nav.active {
+    color: #ffffff;                             /* Reinweisser Text fuer den aktuell aktiven Menuepunkt */
+    background: rgba(8, 2, 8, 0.336);          /* Legt einen hauchdünnen, lila Schleier über den schwarzen Hintergrund */
+}
+
+.button_nav:active {
+    transform: translateY(1px) scale(0.98);     /* Druck-Effekt: Verschiebt den Button beim Klick leicht nach unten und verkleinert ihn */
+    box-shadow: 0 2px 5px rgba(161, 0, 184, 0.3);/* Erzeugt einen Schatten beim aktiven Klick */
+}
+
+.button_nav_sub {
+    position: relative;                         /* Anker fuer die Neon-Pseudo-Elemente der Unter-Buttons */
+    width: 100%;                                /* Füllt die volle Breite des Eltern-Containers aus */
+    height: 40px;                               /* Standard-Hoehe fuer Sekundaer-Buttons */
+    background: #000;                           /* Schwarzer Kern-Hintergrund */
+    display: flex;                              /* Flexbox zur Textzentrierung */
+    align-items: center;                        /* Vertikale Zentrierung */
+    justify-content: center;                    /* Horizontale Zentrierung */
+    color: rgb(226, 226, 226);                  /* Helle Schriftfarbe */
+    text-decoration: none;                      /* Entzieht Links die Unterstreichung */
+    font-weight: 600;                           /* Halbfette Schrift fuer gute Lesbarkeit */
+    border: none;                               /* Keinerlei Standard-Rahmen */
+    border-radius: 5px;                         /* Abgerundete Ecken */
+    cursor: pointer;                            /* Hand-Symbol bei Mauszeiger-Kontakt */
+    box-sizing: border-box;                     /* Korrekte Box-Berechnung */
+}
+
+.button_nav_sub::before {
+    content: '';                                /* Pseudo-Element fuer den bunten Rand */
+    position: absolute;                         /* Absolute Ausrichtung am Hauptbutton */
+    margin: auto;                               /* Automatische Zentrierung */
+    width: 101%;                                /* Steht seitlich leicht über fuer den Rand-Effekt */
+    height: 43px;                               /* Etwas hoeher fuer den oberen/unteren Rand */
+    border-radius: 5px;                         /* Gleiche Eckenrundung */
+    background: linear-gradient(-45deg, #a100b8 0%, #0077b6 100%); /* Farbverlauf lila/blau */
+    z-index: -10;                               /* Hinter den Button schichten */
+    pointer-events: none;                       /* Klicks durchreichen */
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Sanfte Formänderungs-Transition */
+}
+
+.button_nav_sub::after {
+    content: "";                                /* Pseudo-Element fuer den Leuchteffekt */
+    z-index: -1;                                /* Schichtung hinter dem Button */
+    position: absolute;                         /* Vollflaechige Abdeckung */
+    inset: 0;                                   /* Bündiges Ausrichten */
+    background: linear-gradient(-45deg, #a100b8 0%, #0077b6 100%); /* Identischer Farbverlauf */
+    transform: translate3d(0, 0, 0) scale(0.95);/* GPU-Skalierung */
+    filter: blur(10px);                         /* Starker Weichzeichner fuer Glow */
+}
+
+.button_nav_sub:active {
+    transform: translateY(1px) scale(0.98);     /* Klick-Animation nach unten */
+    box-shadow: 0 2px 5px rgba(161, 0, 184, 0.3);/* Lila Schatten beim Draufdruecken */
+}
+
+/* Footer Styling */
+.app_footer {
+    background-color: rgba(0, 0, 0, 0.5);      /* 50% transparentes Schwarz */
+    backdrop-filter: blur(5px);                 /* Glaseffekt ueber dem Hintergrundbild */
+    padding: 12px 0;                            /* Abstände oben und unten von 12px */
+    text-align: center;                         /* Zentriert den Textinhalt im Footer */
+}
+
+.footer_nav {
+    display: flex;                              /* Horizontale Ausrichtung der Footer-Links */
+    justify-content: center;                    /* Zentriert alle Links waagerecht in der Mitte */
+    gap: 25px;                                  /* 25px Abstand zwischen den einzelnen Footer-Links */
+}
+
+.footer_link {
+    color: rgb(199, 199, 199);                  /* Etwas abgedunkeltes Weiß fuer unaufdringliche Links */
+    text-decoration: none;                      /* Keinerlei Unterstreichung */
+    font-size: 0.9rem;                          /* Leicht verkleinerte Schriftgroesse */
+    transition: color 0.2s ease;                /* Sanfter Farduebergang beim Drueberfahren */
+}
+
+.footer_link:hover {
+    color: #40c9ff;                             /* Leuchteffekt (Neon-Cyan) beim Drüberfahren */
+}
+
+/* =======================================================================================================
+                                            Startseite & Karusell
+======================================================================================================= */
+
+/* Layout für die Startseite */
+.page_title {
+    text-align: center;                         /* Zentriert die Hauptueberschrift auf der Seite */
+    font-size: 2.2rem;                          /* Große, dominante Schriftgroesse */
+    margin-bottom: 25px;                        /* Abstand zum nachfolgenden Element */
+    color: rgb(226, 226, 226);                  /* Helles Grau als Grundfarbe */
+    text-shadow: 0 0 10px rgba(232, 28, 255, 0.5); /* Magentafarbener Neon-Schattenschein hinter dem Text */
+}
+
+.cards_grid {
+    display: flex;                              /* Flexbox fuer das Karten-Raster */
+    flex-direction: column;                     /* Ordnet die Karten untereinander an */
+    align-items: center;                        /* Zentriert die Karten waagerecht in der Mitte */
+    gap: 30px;                                  /* Abstand zwischen den Karten */
+    padding-top: 10px;                          /* Innenabstand nach oben */
+}
+
+.ui_card {
+    position: relative;                         /* Ankerpunkt fuer interne Positionierungen */
+    width: 80%;                                 /* Nutzt 80% der verfuegbaren Containerbreite */
+    height: auto;                               /* Hoehe passt sich flexibel dem Inhalt an */
+    display: flex;                              /* Flexbox fuer vertikalen Inhalt */
+    flex-direction: column;                     /* Stapelt Inhalte untereinander */
+    justify-content: flex-end;                  /* Richtet Inhalte am unteren Kartenrand aus */
+    padding: 16px;                              /* Innenabstand an allen 4 Innenseiten */
+    gap: 12px;                                  /* Abstand zwischen den internen Blöcken/Texten */
+    box-sizing: border-box;                     /* Padding schraenkt die Außenmaße nicht ein */
+    border-radius: 5px;                         /* Leicht abgerundete Kartenecken */
+    background: rgba(0, 0, 0, 0.4);            /* Halbtransparentes Schwarz fuer das Glas-Design */
+    backdrop-filter: blur(2px);                 /* Minimaler Weichzeichner des Hintergrunds */
+    box-shadow: 
+        0 0 6px 0px rgba(161, 0, 184, 0.8),     /* Innerer/Enger lila Neon-Glow */
+        0 0 15px 1px rgba(0, 119, 182, 0.5);    /* Äußerer, weicher blauer Neon-Glow */
+}
+
+.card_heading {
+    text-align: center;                         /* Zentriert den Titel der Karte */
+    font-size: 20px;                            /* Gut lesbare Ueberschriften-Groesse */
+    font-weight: 700;                           /* Fette Schriftgewichtung */
+    margin: 0;                                  /* Entfernt Standard-Ueberschriftenrander */
+    color: white;                               /* Klare weisse Farbe */
+}
+
+.ui_card p:not(.card_heading) {
+    font-size: 14px;                            /* Schriftgroesse fuer normale Absatzttexte in der Karte */
+    margin: 0;                                  /* Entfernt Außenabstaende der Paragraphen */
+}
+
+/* Äußerer Wrapper richtet Pfeile und Carousel nebeneinander aus */
+.carousel_wrapper {
+    position: relative;                         /* Positionierungs-Kontext */
+    display: flex;                              /* Richtet Pfeil-Links, Karussell, Pfeil-Rechts nebeneinander aus */
+    align-items: center;                        /* Zentriert Pfeile vertikal zur Mitte des Karussells */
+    justify-content: center;                    /* Zentriert das gesamte Karussell-Gefuege waagerecht */
+    gap: 16px;                                  /* Abstand zwischen den Pfeilen und dem Carousel */
+    width: 100%;                                /* Volle Breite nutzen */
+    max-width: 950px;                           /* Bietet Platz für Carousel + Pfeile außen */
+    margin: 20px auto;                          /* Zentriert das Karussell mit 20px Abstand oben/unten */
+}
+
+/* Das Carousel-Fenster */
+.carousel_container {
+    position: relative;                         /* Bezugspunkt fuer die Sliderelemente */
+    width: 100%;                                /* Nutzt die moegliche Breite des Wrappers */
+    max-width: 850px;                           /* Maximalbreite der Bildanzeige */
+    overflow: hidden;                           /* Versteckt alle Slides, die gerade ausserhalb des Sichtfelds liegen */
+    border-radius: 5px;                         /* Abgerundete Ecken */
+    background: rgba(0, 0, 0, 0.4);            /* Glas-Look Hintergrund */
+    backdrop-filter: blur(4px);                 /* Weichzeichner des dahinterliegenden Hintergrundbilds */
+    box-shadow: 
+        0 0 10px 0px rgba(161, 0, 184, 0.6),    /* Lila Leuchtschein */
+        0 0 20px 2px rgba(0, 119, 182, 0.4);    /* Blauer Leuchtschein */
+}
+
+.carousel_track {
+    display: flex;                              /* Ordnet alle Slides nebeneinander in einer langen Reihe an */
+    transition: transform 0.5s ease-in-out;     /* Geschmeidige Bewegung beim Wechseln der Bilder */
+}
+
+.carousel_slide {
+    min-width: 100%;                            /* Jede Einzel-Slide nimmt exakt 100% der Containerbreite ein */
+    box-sizing: border-box;                     /* Bezieht Rahmen/Padding ein */
+    display: flex;                              /* Flexbox zum Zentrieren des Bildes */
+    justify-content: center;                    /* Horizontale Zentrierung des Bildes */
+    align-items: center;                        /* Vertikale Zentrierung des Bildes */
+}
+
+.carousel_img {
+    width: 70%;                                 /* Bild nimmt 70% der Slide-Breite ein */
+    height: auto;                               /* Bebehaelt Seitenverhaeltnis bei */
+    max-height: 450px;                          /* Begrenzt die maximale Bildhoehe */
+    object-fit: cover;                          /* Skaliert das Bild sauber ohne Verzerrung */
+    display: block;                             /* Verhindert unerwuenschte Inline-Abstaende unter dem Bild */
+    border-radius: 6px;                         /* Abgerundete Bildecken */
+}
+
+/* Pfeile außerhalb im Cyberpunk/Neon Style */
+.carousel_btn {
+    position: relative;                         /* Anker fuer die Neon-Pseudo-Elemente */
+    width: 40px;                                /* Quadartische Breite fuer Pfeilbutton */
+    height: 40px;                               /* Quadartische Hoehe fuer Pfeilbutton */
+    background: #000;                           /* Schwarze Basis */
+    display: flex;                              /* Zentriert das Pfeilicon */
+    align-items: center;                        /* Vertikal zentrieren */
+    justify-content: center;                    /* Horizontal zentrieren */
+    color: rgb(226, 226, 226);                  /* Pfeilfarbe */
+    text-decoration: none;                      /* Entfernt die Standard-Link-Unterstreichung */
+    font-weight: 500;                           /* Mittlere Schriftstaerke */
+    border: none;                               /* Kein Standard-Rahmen */
+    border-radius: 5px;                         /* Abgerundete Ecken */
+    cursor: pointer;                            /* Klickbarer Zeiger */
+    box-sizing: border-box;                     /* Exakte Maße */
+}
+
+.carousel_btn::before {
+    content: '';                                /* Erzeugt den farbigen Neon-Rand */
+    position: absolute;                         /* Absolute Ausrichtung */
+    margin: auto;                               /* Zentrieren */
+    width: 41px;                                /* Minimal breiter als der Button */
+    height: 44px;                               /* Minimal hoeher als der Button */
+    border-radius: 5px;                         /* Gleiche Eckenrundung */
+    background: linear-gradient(-45deg, #a100b8 0%, #0077b6 100%); /* Dunklerer Farbverlauf für die Buttons */
+    z-index: -10;                               /* Hintern Button legen */
+    pointer-events: none;                       /* Durchklickbar machen */
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Elastische Transition */
+}
+
+.carousel_btn::after {
+    content: "";                                /* Erzeugt den weichen Neon-Glow */
+    z-index: -1;                                /* Hinter den Pfeil-Button schichten */
+    position: absolute;                         /* Vollabdeckung */
+    inset: 0;                                   /* Bündige Kanten */
+    background: linear-gradient(-45deg, #a100b8 0%, #0077b6 100%); /* Farbverlauf */
+    transform: translate3d(0, 0, 0) scale(0.95);/* GPU Beschleunigung */
+    filter: blur(10px);                         /* Glow-Effekt durch Blur */
+}
+
+.carousel_btn:active {
+    transform: translateY(1px) scale(0.98);     /* Druck-Animation beim Anklicken */
+    box-shadow: 0 2px 5px rgba(161, 0, 184, 0.3);/* Schatten beim Klick */
+}
+
+/* =======================================================================================================
+                                                    Tools
+======================================================================================================= */
+
+/* Header mit 4 Tab-Buttons nebeneinander */
+.tools_tab_header {
+    display: flex;                              /* Ordnet die Tab-Buttons waagerecht in einer Reihe an */
+    gap: 12px;                                  /* Abstaende zwischen den einzelnen Tab-Buttons */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15); /* Dezente Trennlinie unter dem Header-Bereich */
+    padding-bottom: 18px;                       /* Abstand vom Button-Text zur Trennlinie */
+    margin-bottom: 24px;                        /* Abstand von der Trennlinie zum Inhaltsbereich */
+}
+
+/* Inhalts-Container */
+.tools_tab_body {
+    position: relative;                         /* Ankerpunkt fuer die absoluten/relativen Inhalts-Panels */
+    width: 100%;                                /* Volle Containerbreite */
+    overflow: hidden;                           /* Beschneidet überstehenden Inhalt waehrend Hoehenanimationen */
+    transition: height 0.3s ease-in-out;        /* Sanfter Übergang für die dynamische Höhenänderung */
+}
+
+/* Inhalts-Panels */
+.main_tab_panel {
+    display: none;                              /* Standardmaessig versteckt, wenn Tab nicht aktiv ist */
+    opacity: 0;                                 /* Vollstaendig transparent */
+    transition: opacity 0.25s ease-in-out;      /* Sanftes Einblenden des Inhalts beim Aktivieren */
+}
+
+.main_tab_panel.active {
+    display: block;                             /* Macht das aktuell ausgewaehlte Tab-Panel sichtbar */
+    opacity: 1;                                 /* Bringt die Deckkraft auf 100% */
+}
+
+/* Grid-Layout für den Info-Bereich */
+.info_grid {
+    display: grid;                              /* Aktiviert ein dynamisches Raster fuer Tool-Beschreibungen */
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Automatisches Einpassen: Kacheln mind. 220px breit */
+    gap: 20px;                                  /* Abstand zwischen den einzelnen Info-Kacheln */
+}
+
+.info_card {
+    background: rgba(255, 255, 255, 0.03);      /* Sehr dezenter, dunkler Glashintergrund */
+    border: 1px solid rgba(255, 255, 255, 0.08);/* Zarte helle Umrandung */
+    border-radius: 8px;                         /* Leicht stärkere Eckenrundung */
+    padding: 20px;                              /* Innenabstand fuer Text */
+    transition: transform 0.3s ease, border-color 0.3s ease; /* Geschmeidige Hover-Animation */
+}
+
+.info_icon {
+    font-size: 2rem;                            /* Groesse der Icons/Emojis */
+    margin-bottom: 10px;                        /* Abstand zum Titel darunter */
+}
+
+.info_card h3 {
+    font-size: 1.1rem;                          /* Schriftgroesse des Kacheltitels */
+    margin: 0 0 8px 0;                          /* Abstaende oben/unten zur Feinjustierung */
+    color: #ffffff;                             /* Reinweisser Titel */
+}
+
+.info_card p {
+    font-size: 0.88rem;                         /* Etwas verkleinerte Schriftgroesse fuer Beschreibungstext */
+    color: #b3b3b3;                             /* Gut lesbares, helles Grau */
+    line-height: 1.5;                           /* Erhoehter Zeilenabstand fuer bessere Lesbarkeit */
+    margin: 0;                                  /* Entfernt Standard-Ränder */
+}
+
+.tool_img_wrapper {
+    justify-content: center;                    /* Zentriert die Vorschaubilder horizontal */
+    gap: 16px;                                  /* Abstand zwischen zwei Vorschaubildern */
+    display: flex;                              /* Flexbox-Anordnung */
+    flex-direction: row;                        /* Nebeneinander-Ausrichtung */
+}
+
+.tool_img {
+    width: 400px;                               /* Feste Breite fuer Tool-Vorschaubilder */
+    height: auto;                               /* Hoehe passt sich automatisch an */
+    max-height: 450px;                          /* Begrenzung der maximalen Bildhoehe */
+    object-fit: contain;                        /* Bild wird vollstaendig angezeigt ohne Beschneidung */
+    border-radius: 6px;                         /* Leicht abgerundete Bildecken */
+}
+
+/* Deine definierten Neon-Buttons (angepasst als Anchor-Tags) */
+.button_tool_nav {
+    position: relative;                         /* Ankerpunkt fuer die Pseudo-Neon-Elemente */
+    width: 25%;                                 /* Jeder der 4 Buttons nimmt exakt ein Viertel (25%) der Breite ein */
+    height: 40px;                               /* Standard-Hoehe */
+    background: #000;                           /* Schwarze Grundflaeche */
+    display: flex;                              /* Flexbox zur Textzentrierung */
+    align-items: center;                        /* Vertikales Zentrieren */
+    justify-content: center;                    /* Horizontales Zentrieren */
+    color: rgb(226, 226, 226);                  /* Textfarbe */
+    text-decoration: none;                      /* Entfernt die Standard-Link-Unterstreichung */
+    font-weight: 600;                           /* Halbfette Schrift */
+    border: none;                               /* Kein Standard-Rahmen */
+    border-radius: 5px;                         /* Eckenrundung */
+    cursor: pointer;                            /* Klickzeiger */
+    box-sizing: border-box;                     /* Exakte Maße */
+}
+
+.button_tool_nav::before {
+    content: '';                                /* Erzeugt die Umrandung mit Farbverlauf */
+    position: absolute;                         /* Ausrichtung am Button */
+    margin: auto;                               /* Zentrieren */
+    width: 101%;                                /* Steht minimal seitlich ueber */
+    height: 43px;                               /* Steht oben und unten ueber */
+    border-radius: 5px;                         /* Gleiche Eckenrundung */
+    background: linear-gradient(-45deg, #a100b8 0%, #0077b6 100%); /* Dunklerer Farbverlauf für die Buttons */
+    z-index: -10;                               /* Hinter den schwarzem Hauptbutton schichten */
+    pointer-events: none;                       /* Durchklickbar */
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Sanftes Uebergehen */
+}
+
+.button_tool_nav::after {
+    content: "";                                /* Erzeugt den Neon-Glow */
+    z-index: -1;                                /* Hinter den Button legen */
+    position: absolute;                         /* Abdeckung */
+    inset: 0;                                   /* Bündig anlegen */
+    background: linear-gradient(-45deg, #a100b8 0%, #0077b6 100%); /* Farbverlauf */
+    transform: translate3d(0, 0, 0) scale(0.95);/* GPU Skalierung */
+    filter: blur(10px);                         /* Weichzeichner fuer Neonschein */
+}
+
+.button_tool_nav.active {
+    color: #ffffff;                             /* Reines Weiss fuer den aktiven Tab-Text */
+    background: rgba(8, 2, 8, 0.336);          /* Legt einen hauchdünnen, lila Schleier über den schwarzen Hintergrund */
+}
+
+.button_tool_nav:active {
+    transform: translateY(1px) scale(0.98);     /* Druck-Effekt beim Klick */
+    box-shadow: 0 2px 5px rgba(161, 0, 184, 0.3);/* Schatten-Effekt */
+}
+
+/* =======================================================================================================
+                                            Kontakt
+======================================================================================================= */
+
+/* --- Kontaktformular Styling --- */
+
+.form_ui_card {
+    max-width: 550px;                           /* Maximale Breite des Kontaktformulars */
+    margin: auto;                               /* Zentriert die Karte horizontal */
+    text-align: left;                           /* Linksbündige Textausrichtung */
+    position: relative;                         /* Anker fuer untergeordnete Elemente */
+    width: 80%;                                 /* Standardbreite in Prozent */
+    height: auto;                               /* Dynamische Hoehe je nach Inhalt */
+    display: flex;                              /* Flexbox-Struktur */
+    flex-direction: column;                     /* Stapelt Elemente untereinander */
+    justify-content: flex-end;                  /* Richtet Inhalte nach unten hin aus */
+    padding: 16px;                              /* Innenabstand */
+    box-sizing: border-box;                     /* Korrekte Boxberechnung */
+    border-radius: 5px;                         /* Eckenrundung */
+    background: rgba(0, 0, 0, 0.5);            /* 50% transparentes Schwarz */
+    backdrop-filter: blur(2px);                 /* Glaseffekt */
+    box-shadow: 
+        0 0 6px 0px rgba(161, 0, 184, 0.8),     /* Lila Neon-Schatten */
+        0 0 15px 1px rgba(0, 119, 182, 0.5);    /* Blauer Neon-Schatten */
+}
+
+.form_subtext {
+    color: #b0b5c0;                             /* Dezent graublaue Textfarbe */
+    font-size: 1em;                             /* Standard Schriftgroesse */
+    margin-top: 5px;                            /* Oberer Abstand */
+    margin-bottom: 25px;                        /* Unterer Abstand zum Formular */
+    text-align: center;                         /* Zentrierte Ausrichtung */
+}
+
+.neon_form {
+    display: flex;                              /* Ordnet Formularelemente vertikal an */
+    flex-direction: column;                     /* Stapelung in einer Spalte */
+    gap: 20px;                                  /* 20px Abstand zwischen jedem Eingabefeld */
+}
+
+/* Eingabefelder im edlen Transparenz-Look */
+.form_input {
+    width: 100%;                                /* Volle Breite der Formularkarte */
+    padding: 12px 16px;                         /* Bequemer Innenabstand fuer Texteingaben */
+    background: rgba(0, 0, 0, 0.4);            /* Halbtransparenter schwarzer Feld-Hintergrund */
+    backdrop-filter: blur(8px);                 /* Starker Glaseffekt innerhalb des Eingabefeldes */
+    border: 1px solid rgba(255, 255, 255, 0.123);/* Sehr feine, helle Umrandung oben/links/rechts */
+    border-radius: 5px;                         /* Abgerundete Feldecken */
+    border-bottom: 2px solid rgba(0, 119, 182, 0.6); /* Blauer Strich unten als visueller Akzent */
+    color: #ffffff;                             /* Weisse Eingabeschrift */
+    font-size: 0.95rem;                         /* Eingabegroesse */
+    outline: none;                              /* Entfernt den standardmäßigen blauen Browser-Fokusrahmen */
+    transition: all 0.3s ease;                  /* Sanfter Uebergang bei Klick/Fokus */
+    box-sizing: border-box;                     /* Exakte Breitenberechnung */
+}
+
+.form_textarea {
+    resize: vertical;                           /* Erlaubt dem Nutzer die Hoehe manuell anzupassen (nur vertikal) */
+    min-height: 120px;                          /* Mindesthoehe fuer das Textnachrichtenfeld */
+}
+
+/* Hover & Focus Effekt für Eingabefelder (Dezenter Neon-Glow bei Klick) */
+.form_input:focus {
+    background: rgba(255, 255, 255, 0.1);      /* Hellst den Hintergrund bei Klick leicht auf */
+    border-bottom: 2px solid rgba(161, 0, 184, 1); /* Wechselt die untere Linie zu leuchtendem Lila */
+    box-shadow: 0 8px 15px -8px rgba(161, 0, 184, 0.6); /* Leichter lila Schein nach unten */
+}
+
+.form_input::placeholder {
+    color: rgba(255, 255, 255, 0.2);            /* Sehr dezent dargestellter Platzhalter-Text */
+}
+
+/* =======================================================================================================
+                                             Login
+======================================================================================================= */
+
+/* --- LAYOUT ZENTRIEREN --- */
+.box_container {
+    display: flex;                              /* Flexbox fuer perfekte Zentrierung */
+    justify-content: center;                    /* Zentriert die Login-Karte waagerecht */
+    align-items: center;                        /* Zentriert die Login-Karte vertikal */
+    padding-top: 20px;                          /* Abstand nach oben */
+}
+
+/* --- LOGIN KARTE ANPASSEN --- */
+.login_card {
+    max-width: 400px;                           /* Die Karte soll nicht über den ganzen Bildschirm gehen */
+    width: 100%;                                /* Flexibel bis zur Maximalbreite */
+    padding: 40px 30px;                         /* Großzuegiger Innenabstand */
+    align-items: center;                        /* Zentriert den Inhalt der Karte */
+}
+
+.login_title {
+    color: #fff;                                /* Reines Weiss */
+    margin-bottom: 30px;                        /* Großer Abstand zum ersten Eingabefeld */
+    font-size: 24px;                            /* Große Titel-Schrift */
+    letter-spacing: 2px;                        /* Erhöhter Zeichenabstand fuer futuristischen Look */
+    text-transform: uppercase;                  /* Wandelt Text in Grossbuchstaben um */
+    text-shadow: 0 0 10px rgba(161, 0, 184, 0.8);/* Lila Leuchtschein hinter dem Logintitel */
+}
+
+/* --- FORMULAR & EINGABEFELDER --- */
+.login_form {
+    width: 100%;                                /* Volle Breite */
+    display: flex;                              /* Flexbox-Struktur */
+    flex-direction: column;                     /* Vertikale Anordnung der Felder */
+    gap: 25px;                                  /* Abstaende zwischen den Eingabegruppen */
+}
+
+.input_group {
+    display: flex;                              /* Bündelt Label und Input zusammen */
+    flex-direction: column;                     /* Label steht ueber dem Input */
+    gap: 8px;                                   /* Abstand zwischen Beschriftung und Feld */
+    width: 100%;                                /* Volle Breite */
+}
+
+.input_group label {
+    color: white;                               /* Weisse Label-Farbe */
+    font-size: 13px;                            /* Kompakte Schriftgroesse */
+    letter-spacing: 1px;                        /* Leicht erhoehte Laufweite */
+    font-weight: 600;                           /* Halbfette Beschriftung */
+    font-size: 1em;                             /* Standard-Schriftgroesse Override */
+}
+
+/* Der Glassmorphism-Look für die Textfelder */
+.input_group input {
+    width: 100%;                                /* Volle Breite */
+    background: rgba(255, 255, 255, 0.05);      /* Sehr leichtes, milchiges Weiß */
+    border: none;                               /* Keine Ränder links/rechts/oben */
+    border-bottom: 2px solid rgba(0, 119, 182, 0.6); /* Blauer Strich unten */
+    padding: 12px 15px;                         /* Bequemes Padding */
+    color: #fff;                                /* Weisse Eingabeschrift */
+    font-size: 16px;                            /* Lesbare Schriftgroesse */
+    border-radius: 5px;                         /* Eckenrundung */
+    box-sizing: border-box;                     /* Exakte Maße */
+    outline: none;                              /* Kein Standard-Fokusrahmen */
+    transition: all 0.3s ease;                  /* Uebergangs-Animation */
+}
+
+/* Neon-Effekt, wenn man in das Feld klickt (Fokus) */
+.input_group input:focus {
+    background: rgba(255, 255, 255, 0.1);      /* Aufhellung beim Reinklicken */
+    border-bottom: 2px solid rgba(161, 0, 184, 1); /* Wechselt zu Lila */
+    box-shadow: 0 8px 15px -8px rgba(161, 0, 184, 0.6); /* Leichter Schein nach unten */
+}
+
+/* Platzhalter-Text abdunkeln */
+.input_group input::placeholder {
+    color: rgba(255, 255, 255, 0.093);          /* Stark abgedunkelter Platzhalter-Text */
+}
+
+/* --- LINKS UNTER DEM FORMULAR --- */
+.login_footer {
+    margin-top: 25px;                           /* Abstand nach oben zum Formular */
+    display: flex;                              /* Flexbox fuer Hilfsklinks */
+    flex-direction: column;                     /* Untereinander anordnen */
+    align-items: center;                        /* Mittig ausrichten */
+    gap: 10px;                                  /* Abstand zwischen den Links */
+}
+
+.login_footer a {
+    color: rgba(0, 119, 182, 0.8);              /* Cyan-Blaue Linkfarbe */
+    text-decoration: none;                      /* Keine Unterstreichung */
+    font-size: 13px;                            /* Leicht verkleinert */
+    transition: all 0.3s ease;                  /* Sanfter Hover-Uebergang */
+}
+
+.login_footer a:hover {
+    color: rgba(161, 0, 184, 1);                /* Farbwechsel zu Lila beim Hovern */
+    text-shadow: 0 0 8px rgba(161, 0, 184, 0.6);/* Lila Leuchteffekt bei Mauszeigerkontakt */
+}
+
+/* =======================================================================================================
+                                             Preis
+======================================================================================================= */
+
+/* Container für die gesamte Preisseite */
+.pricing_wrapper {
+    width: 80%;                                 /* Nutzt 80% der Fensterbreite */
+    margin: 10px auto;                          /* Zentriert das Element horizontal */
+    display: flex;                              /* Flexbox-Struktur */
+    flex-direction: column;                     /* Stapelt Header, Karte, Footer vertikal */
+    gap: 24px;                                  /* Abstaende zwischen den Blöcken */
+    color: #ffffff;                             /* Reines Weiss */
+    justify-content: center;                    /* Vertikale Zentrierung */
+    align-items: center;                        /* Waagerechte Zentrierung */
+    padding-top: 20px;                          /* Abstand nach oben */
+}
+
+/* Header-Bereich oben */
+.pricing_header {
+    text-align: left;                           /* Standard-Ausrichtung */
+}
+
+.pricing_title {
+    font-size: 2rem;                            /* Große Ueberschrift */
+    font-weight: 800;                           /* Extra fette Schrift */
+    letter-spacing: 1px;                        /* Leicht erhoehte Zeichenabstaende */
+    margin: 0 0 10px 0;                         /* Abstaende */
+    color: #ffffff;                             /* Weiss */
+    text-shadow: 0 0 10px rgba(161, 0, 184, 0.5);/* Lila Neonschein */
+    text-align: center;                         /* Zentrierter Preistitel */
+}
+
+.pricing_subtitle {
+    font-size: 0.95rem;                         /* Subtitel Schriftgroesse */
+    color: #b3b3b3;                             /* Dezent helle Graufarbe */
+    margin: 0;                                  /* Keine Ränder */
+    line-height: 1.5;                           /* Lesefreundliche Zeilenhoehe */
+    text-align: center;                         /* Zentriert */
+}
+
+/* Border Gradient über ::before pseudo element */
+.pricing_card::before {
+    content: '';                                /* Erzeugt den farbigen Rand um die Preiskarte */
+    position: absolute;                         /* Absolute Ausrichtung */
+    inset: -2px;                                /* Steht rundherum 2px über fuer den Rahmen */
+    border-radius: 10px;                        /* Abgerundete Ecken */
+    background: linear-gradient(-45deg, #a100b8 0%, #0077b6 100%); /* Bunter Neon-Farbverlauf */
+    z-index: -1;                                /* Schichtung hinter der Karte */
+    pointer-events: none;                       /* Keine Interaktions-Blockade */
+}
+
+/* 2-Spalten Layout */
+.pricing_card_inner {
+    display: flex;                              /* Ordnet Preis (links) und Features (rechts) nebeneinander an */
+    justify-content: space-between;             /* Maximale Verteilung der zwei Spalten */
+    gap: 40px;                                  /* 40px Abstand zwischen den Spalten */
+    align-items: center;                        /* Richtet beide Spalten vertikal mittig aus */
+}
+
+/* Linke Spalte (Preis & Button) */
+.pricing_left {
+    display: flex;                              /* Flexbox fuer Preis-Informationen */
+    flex-direction: column;                     /* Anordnung untereinander */
+    align-items: flex-start;                    /* Linksbündige Ausrichtung */
+    width: 40%;                                 /* Nimmt 40% der Kartenebreite ein */
+}
+
+.price_display {
+    display: flex;                              /* Ordnet Betrag und Währung/Zeitraum nebeneinander an */
+    align-items: baseline;                      /* Richtet die Unterkante der Schriftzeichen exakt aufeinander aus */
+    gap: 8px;                                   /* Abstand zwischen Betrag und Intervall */
+    margin-bottom: 30px;                        /* Abstand nach unten zum Button */
+    margin-left: 40px;                          /* Einrueckung von links */
+}
+
+.price_amount {
+    font-size: 3.8rem;                          /* Sehr große, auffaellige Preisangabe */
+    font-weight: 900;                           /* Maximal fette Schriftstaerke */
+    line-height: 1;                             /* Kompakte Zeilenhoehe */
+    color: #ffffff;                             /* Reines Weiss */
+    text-shadow: 0 0 15px rgba(161, 0, 184, 0.8);/* Starke lila Neon-Aura hinter der Zahl */
+}
+
+.price_period {
+    font-size: 1.1rem;                          /* Groesse fuer den Zeitintervall-Text (z.B. /Monat) */
+    color: #b3b3b3;                             /* Helles Grau */
+}
+
+.price_disclaimer {
+    font-size: 0.8rem;                          /* Kleingedruckter Hinweis-Text */
+    color: #888;                                /* Dunkleres Grau */
+    margin-top: 12px;                           /* Abstand nach oben */
+}
+
+/* Rechte Spalte (Features) */
+.pricing_right {
+    flex: 1;                                    /* Nimmt den gesamten verbleibenden Platz ein */
+}
+
+.feature_list_wrapper {
+    width: 80%;                                 /* Breite der Feature-Box */
+    padding: 16px;                              /* Innenabstand */
+}
+
+.feature_list {
+    list-style: none;                           /* Entfernt die standardmäßigen Aufzaehlungspunkte */
+    display: flex;                              /* Flexbox fuer Listenpunkte */
+    flex-direction: column;                     /* Untereinander anordnen */
+    gap: 14px;                                  /* Abstand zwischen den einzelnen Features */
+}
+
+.feature_list li {
+    display: flex;                              /* Ordnet Häkchen-Icon und Text nebeneinander an */
+    align-items: flex-start;                    /* Obenbündig ausrichten */
+    gap: 12px;                                  /* Abstand vom Häkchen zum Text */
+    font-size: 0.95rem;                         /* Standard-Textgroesse */
+    color: #e0e0e0;                             /* Sehr helles Grau */
+    line-height: 1.4;                           /* Gute Zeilenschaltung */
+}
+
+.check_icon {
+    color: #0077b6;                             /* Leuchtendes Cyan-Blau fuer das Häkchen */
+    font-weight: bold;                          /* Fette Strichstaerke */
+    font-size: 1.1rem;                          /* Leicht vergrößert */
+    text-shadow: 0 0 8px #0077b6;               /* Blauer Neon-Glow hinter dem Häkchen */
+}
+
+/* Fußzeile unter dem Strich */
+.pricing_footer_note {
+    margin-top: 28px;                           /* Abstand nach oben zur Preiskarte */
+    padding-top: 20px;                          /* Innenabstand über dem Text */
+    border-top: 1px solid rgba(255, 255, 255, 0.15); /* Dezente Trennlinie nach oben hin */
+    font-size: 0.9rem;                          /* Kompakte Textgroesse */
+    color: #cccccc;                             /* Helles Grau */
+    text-align: center;                         /* Zentrierter Text */
+}
+
+.pricing_btn {
+    position: relative;                         /* Anker fuer die Pseudo-Neon-Elemente */
+    width: 100%;                                /* Volle Spaltenbreite */
+    height: 40px;                               /* Standard-Buttonhoehe */
+    background: #000;                           /* Schwarze Basis */
+    display: flex;                              /* Flexbox-Zentrierung */
+    align-items: center;                        /* Vertikale Zentrierung */
+    justify-content: center;                    /* Horizontale Zentrierung */
+    color: rgb(226, 226, 226);                  /* Textfarbe */
+    text-decoration: none;                      /* Entfernt die Standard-Link-Unterstreichung */
+    font-weight: 500;                           /* Mittlere Schriftstaerke */
+    border: none;                               /* Kein Standard-Rahmen */
+    border-radius: 5px;                         /* Abgerundete Ecken */
+    cursor: pointer;                            /* Hand-Symbol beim Hovern */
+    box-sizing: border-box;                     /* Exakte Maße */
+}
+
+.pricing_btn::before {
+    content: '';                                /* Erzeugt den bunten Rahmen */
+    position: absolute;                         /* Absolute Ausrichtung am Button */
+    margin: auto;                               /* Zentrieren */
+    width: 101%;                                /* Leicht breiter als der Button */
+    height: 44px;                               /* Leicht hoeher als der Button */
+    border-radius: 5px;                         /* Eckenrundung */
+    background: linear-gradient(-45deg, #a100b8 0%, #0077b6 100%); /* Dunklerer Farbverlauf für die Buttons */
+    z-index: -10;                               /* Hinter den Button schichten */
+    pointer-events: none;                       /* Durchklickbar */
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Elastische Transition */
+}
+
+.pricing_btn::after {
+    content: "";                                /* Erzeugt den Neon-Glow */
+    z-index: -1;                                /* Hinter den Button legen */
+    position: absolute;                         /* Vollflaechige Abdeckung */
+    inset: 0;                                   /* Bündige Kanten */
+    background: linear-gradient(-45deg, #a100b8 0%, #0077b6 100%); /* Farbverlauf */
+    transform: translate3d(0, 0, 0) scale(0.95);/* Hardware-Skalierung */
+    filter: blur(10px);                         /* Glow-Effekt durch Blur */
+}
+
+.pricing_btn:active {
+    transform: translateY(1px) scale(0.98);     /* Druck-Animation beim Klick */
+    box-shadow: 0 2px 5px rgba(161, 0, 184, 0.3);/* Klick-Schatten */
+}
+
+/* =======================================================================================================
+                                            Logout pop up
+======================================================================================================= */
+
+/* Modal Overlay mit Backdrop-Blur */
+.modal_overlay {
+    position: fixed;                            /* Fixiert das Overlay über dem gesamten Bildschirmausschnitt */
+    top: 0;                                     /* Bündig ganz oben anlegen */
+    left: 0;                                    /* Bündig ganz links anlegen */
+    width: 100vw;                               /* Volle Bildschirmbreite */
+    height: 100vh;                              /* Volle Bildschirmhöhe */
+    background: rgba(0, 0, 0, 0.65);           /* 65% abdunkelndes Schwarz */
+    backdrop-filter: blur(8px);                 /* Starker Weichzeichner des Seitenhintergrunds */
+    display: flex;                              /* Flexbox zur Zentrierung des Modals */
+    justify-content: center;                    /* Horizontale Zentrierung */
+    align-items: center;                        /* Vertikale Zentrierung */
+    z-index: 1000;                              /* Liegt über allen normalen Seitenelementen */
+}
+
+/* Modal Karte Styles */
+.modal_card {
+    max-width: 420px;                           /* Begrenzung der maximalen Pop-up-Breite */
+    width: 90%;                                 /* Dynamische Breite auf kleineren Geräten */
+    animation: modalPopIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Aufplopp-Animation beim Öffnen */
+    text-align: center;                         /* Zentrierter Text im Pop-up */
+}
+
+@keyframes modalPopIn {
+    from {
+        opacity: 0;                             /* Startet vollkommen unsichtbar */
+        transform: scale(0.9);                  /* Startet leicht verkleinert */
+    }
+    to {
+        opacity: 1;                             /* Blendet vollkommen ein */
+        transform: scale(1);                    /* Skaliert auf Originalgröße */
+    }
+}
+
+/* ==========================================================================
+   DASHBOARD HEADER (Begrüßung, Uhrzeit & Wetter)
+   ========================================================================== */
+
+.ui_card_cwd {
+    display: flex;                              /* Flexbox fuer vertikalen Inhalt */
+    flex-direction: row;                        /* Stapelt Inhalte untereinander */
+    justify-content: space-between;             /* Verteilt Begrüßung und Widgets mit maximalem Abstand */
+    gap: 60px;                                  /* Abstand zwischen den internen Blöcken/Texten */
+    align-items: center;                        /* Zentriert Begrüßung und Widgets auf einer Höhe */
+    margin-top: 40px;                           /* Oberer Abstand */
+    margin-left: auto;                          /* Horizontale Zentrierung der Karte */
+    margin-right: auto;                         /* Horizontale Zentrierung der Karte */
+    width: 80%;                                 /* Nutzt 80% der verfuegbaren Containerbreite */
+    padding: 10px;                              /* Innenabstand an allen 4 Innenseiten */
+    box-sizing: border-box;                     /* Padding schraenkt die Außenmaße nicht ein */
+    border-radius: 5px;                         /* Leicht abgerundete Kartenecken */
+    background: rgba(0, 0, 0, 0.4);            /* Halbtransparentes Schwarz fuer das Glas-Design */
+    backdrop-filter: blur(2px);                 /* Minimaler Weichzeichner des Hintergrunds */
+    box-shadow: 
+        0 0 6px 0px rgba(161, 0, 184, 0.8),     /* Innerer/Enger lila Neon-Glow */
+        0 0 15px 1px rgba(0, 119, 182, 0.5);    /* Äußerer, weicher blauer Neon-Glow */
+}
+
+/* Begrüßung */
+.greeting_title {
+    margin: 0;                                  /* Entfernt Standard-Ränder */
+    font-size: 2rem;                            /* Große Begrüßungsschrift */
+    color: #ffffff;                             /* Reines Weiß */
+    text-align: center;                         /* Zentrierte Schrift */
+}
+
+.greeting_subtitle {
+    margin: 4px 0 0 0;                          /* Leicht abgehobener oberer Abstand */
+    color: #a0a5b5;                             /* Dezentes Graublau */
+    font-size: 0.85rem;                         /* Leicht verkleinerter Untertitel */
+    text-align: center;                         /* Zentrierte Schrift */
+}
+
+/* Widgets Container (Gemeinsamer Style für Uhrzeit & Wetter) */
+.header_widget_box {
+    display: flex;                              /* Flexbox-Struktur */
+    align-items: center;                        /* Richtet Icons und Text mittig aus */
+    gap: 12px;                                  /* Abstand zwischen Icon und Text */
+    background: rgba(0, 0, 0, 0.2);            /* Sehr leichtes, dunkles Transparenzfeld */
+}
+
+/* Uhrzeit & Datum spezieller Container */
+.clock_widget_box {
+    flex-direction: column;                     /* Anordnung von Zeit und Datum untereinander */
+    justify-content: center;                    /* Vertikale Zentrierung */
+    text-align: center;                         /* Zentrierter Text */
+    gap: 2px;                                   /* Enge Stapelung von Zeit und Datum */
+}
+
+.clock_time {
+    font-size: 1.8rem;                          /* Große digitale Zeitanzeige */
+    font-weight: bold;                          /* Fette Schrift */
+    color: #00f0ff;                             /* Leuchtendes Cyan-Blau */
+    letter-spacing: 1px;                        /* Digitaluhr-Look durch erhoehte Laufweite */
+}
+
+.clock_date {
+    font-size: 1rem;                            /* Datumsanzeige Schriftgröße */
+    color: #a0a5b5;                             /* Dezent graublaue Textfarbe */
+}
+
+/* Wetter Widget */
+.weather_icon {
+    font-size: 2rem;                            /* Große Darstellung des Wetter-Icons */
+}
+
+.weather_temp {
+    font-size: 1.7rem;                          /* Große Temperaturangabe */
+    font-weight: bold;                          /* Fette Schrift */
+    color: #ffffff;                             /* Reines Weiß */
+}
+
+.weather_city_wrapper {
+    display: flex;                              /* Flexbox-Ausrichtung für die Ortsangabe */
+    align-items: center;                        /* Vertikale Ausrichtung */
+}
+
+.weather_city_text {
+    color: #a0a5b5;                             /* Dezent graublaue Schriftfarbe */
+    font-size: 1rem;                            /* Standard-Schriftgröße */
+}
+
+/* ==========================================================================
+   NOTIZ & WHITEBOARD (Exakte Wireframe-Anpassung)
+   ========================================================================== */
+
+.wb_container {
+    display: flex;                              /* Flexbox für vertikales Layout */
+    flex-direction: column;                     /* Stapelt Header und Arbeitsbereich untereinander */
+    gap: 16px;                                  /* Vertikaler Abstand zwischen Header und Arbeitsbereich */
+    height: calc(100vh - 100px);               /* Füllt genau die verbleibende Höhe der Ansicht aus */
+}
+
+/* Header & Inputs */
+.ui_card_wb_header {
+    display: flex;                              /* Flexbox für horizontale Anordnung */
+    flex-direction: row;                        /* Nebeneinander-Ausrichtung */
+    justify-content: space-between;             /* Verteilt Eingaben und Nav-Buttons */
+    align-items: center;                        /* Vertikale Zentrierung im Header */
+    gap: 16px;                                  /* Abstand zwischen den Elementen im Header */
+    margin-top: 10px;                           /* Abstand nach oben */
+    margin: auto;                               /* Zentriert den Header horizontal */
+    width: 88%;                                 /* Breitenbegrenzung */
+    padding: 12px 20px;                         /* Innenabstand (oben/unten 12px, links/rechts 20px) */
+    box-sizing: border-box;                     /* Exakte Breitenberechnung */
+    border-radius: 5px;                         /* Abgerundete Ecken */
+    background: rgba(0, 0, 0, 0.4);            /* Glassmorphism-Hintergrund */
+    backdrop-filter: blur(2px);                 /* Weichzeichner des Hintergrundbilds */
+    box-shadow: 
+        0 0 6px 0px rgba(161, 0, 184, 0.8),     /* Lila Neon-Glow */
+        0 0 15px 1px rgba(0, 119, 182, 0.5);    /* Blauer Neon-Glow */
+}
+
+.wb_header_center {
+    display: flex;                              /* Nebeneinander-Anordnung der Eingabefelder */
+    justify-content: space-between;             /* Gleichmäßige Verteilung */
+    gap: 12px;                                  /* Abstand zwischen den Feldern */
+    flex-grow: 1;                               /* Dehnt sich aus, um den Platz in der Mitte einzunehmen */
+}
+
+.wb_header_center .wb_input {
+    flex: 1;                                    /* Jedes Eingabefeld teilt sich die Breite gleichmäßig */
+}
+
+.wb_header_right {
+    display: flex;                              /* Nebeneinander-Anordnung der Speichern-Buttons */
+    align-items: center;                        /* Vertikal zentrieren */
+    gap: 12px;                                  /* Abstand zwischen den Buttons */
+}
+
+.wb_input_date {
+    background: rgba(255, 255, 255, 0.05);      /* Transparenter Hintergrund für Datumsfeld */
+    border: 1px solid rgba(255, 255, 255, 0.15);/* Sehr feiner hellgrauer Rand */
+    padding: 8px 12px;                          /* Innenabstand */
+    border-radius: 6px;                         /* Leicht abgerundete Ecken */
+    color: #fff;                                /* Weiße Eingabeschrift */
+    outline: none;                              /* Entfernt Standard-Browserfokus */
+    font-size: 0.85rem;                         /* Kompakte Schriftgröße */
+    margin-left: 1.5em;                         /* Einrückung nach links */
+    height: 1.8em;                              /* Feste Eingabehöhe */
+}
+
+.wb_input_theme {
+    background: rgba(255, 255, 255, 0.05);      /* Transparenter Hintergrund für Themenfeld */
+    border: 1px solid rgba(255, 255, 255, 0.15);/* Feiner Rand */
+    padding: 8px 12px;                          /* Innenabstand */
+    border-radius: 6px;                         /* Eckenrundung */
+    color: #fff;                                /* Weiße Eingabeschrift */
+    outline: none;                              /* Kein Fokusrahmen */
+    font-size: 0.85rem;                         /* Kompakte Schriftgröße */
+    height: 1.8em;                              /* Feste Eingabehöhe */
+}
+
+.wb_input_tag {
+    background: rgba(255, 255, 255, 0.05);      /* Transparenter Hintergrund für Tag-Feld */
+    border: 1px solid rgba(255, 255, 255, 0.15);/* Feiner Rand */
+    padding: 8px 12px;                          /* Innenabstand */
+    border-radius: 6px;                         /* Eckenrundung */
+    color: #fff;                                /* Weiße Eingabeschrift */
+    outline: none;                              /* Kein Fokusrahmen */
+    font-size: 0.85rem;                         /* Kompakte Schriftgröße */
+    width: 60%;                                 /* Belegt 60% der verfügbaren Breite */
+    height: 1.8em;                              /* Feste Eingabehöhe */
+}
+
+.wb_input_date:focus, 
+.wb_input_theme:focus, 
+.wb_input_tag:focus {
+    border-color: #00f0ff;                      /* Färbt den Rahmen bei Klick in leuchtendes Cyan-Blau */
+}
+
+/* Arbeitsbereich Grid */
+.wb_workspace {
+    display: grid;                              /* 3-Spalten-Raster für Sidebars und Editor */
+    grid-template-columns: auto 1fr auto;       /* Sidebars passen sich an, Hauptbereich kriegt den Restplatz (1fr) */
+    gap: 16px;                                  /* Abstand zwischen den 3 Arbeitsflächen-Karten */
+    flex-grow: 1;                               /* Dehnt sich vertikal voll aus */
+    overflow: hidden;                           /* Verhindert äußere Überläufe */
+    padding: 4px;                               /* Verhindert das Abschneiden des box-shadows */
+}
+
+/* Linke & Rechte Sidebars */
+.ui_card_wb_sidebar {
+    position: relative;                         /* Ankerpunkt für interne Positionierungen */
+    display: flex;                              /* Flexbox für vertikalen Inhalt */
+    flex-direction: column;                     /* Stapelt Inhalte untereinander */
+    padding: 16px;                              /* Innenabstand */
+    gap: 12px;                                  /* Abstand zwischen den Werkzeugen/Buttons */
+    box-sizing: border-box;                     /* Padding schränkt die Außenmaße nicht ein */
+    border-radius: 5px;                         /* Leicht abgerundete Kartenecken */
+    background: rgba(0, 0, 0, 0.4);            /* Glassmorphism-Hintergrund */
+    backdrop-filter: blur(2px);                 /* Weichzeichner des Hintergrunds */
+    box-shadow: 
+        0 0 6px 0px rgba(161, 0, 184, 0.8),     /* Lila Neon-Glow */
+        0 0 15px 1px rgba(0, 119, 182, 0.5);    /* Blauer Neon-Glow */
+    overflow: visible;                          /* WICHTIG: Erlaubt das Hinausragen der Popover-Menüs */
+    width: 4.8em;                               /* Kompakte Breite für Icon-Werkzeugleisten */
+    justify-content: center;                    /* Zentriert die Icons vertikal in der Leiste */
+    margin: 0.25em;                             /* Außenabstand für freien Glow-Platz */
+}
+
+/* Farbpalette (Notizblätter) */
+.wb_color_palette {
+    display: flex;                              /* Richtet Farbboxen nebeneinander aus */
+    gap: 6px;                                   /* Abstand zwischen den Farbfeldern */
+    margin: 4px 0;                              /* Vertikaler Abstand */
+}
+
+.wb_color_box {
+    width: 24px;                                /* Quadratische Breite */
+    height: 24px;                               /* Quadratische Höhe */
+    border-radius: 4px;                         /* Leicht abgerundete Ecken */
+    cursor: pointer;                            /* Klickzeiger */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Dezenter Rand um die Farbe */
+}
+
+/* Dropdown/Liste für Formen */
+.wb_forms_list {
+    background: rgba(0, 0, 0, 0.3);            /* Dunkles Transparenzfeld */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Feiner Rand */
+    border-radius: 6px;                         /* Eckenrundung */
+    padding: 6px;                               /* Innenabstand */
+    display: flex;                              /* Flexbox für Listenpunkte */
+    flex-direction: column;                     /* Untereinander-Anordnung */
+    gap: 4px;                                   /* Enge Abstände */
+    font-size: 0.75rem;                         /* Kompakte Textgröße */
+    color: #a0a5b5;                             /* Dezent graublaue Textfarbe */
+}
+
+.wb_forms_item {
+    padding: 4px 8px;                          /* Innenabstand für klickbare Formelemente */
+    cursor: pointer;                            /* Klickzeiger */
+    border-radius: 4px;                         /* Eckenrundung */
+}
+
+.wb_forms_item:hover {
+    background: rgba(0, 240, 255, 0.1);        /* Cyan-blaue Aufhellung beim Drüberfahren */
+    color: #fff;                                /* Weißer Text beim Hovern */
+}
+
+/* Mittlerer Arbeitsbereich (Dokument & Canvas Overlay) */
+.ui_card_wb_mainarea {
+    position: relative;                         /* Ankerpunkt für interne Positionierungen */
+    display: flex;                              /* Flexbox für vertikalen Inhalt */
+    flex-direction: column;                     /* Stapelt Editor und PDF-Leiste untereinander */
+    padding: 0;                                 /* Kein Padding, damit Dokument und PDF-Leiste bündig abschließen */
+    box-sizing: border-box;                     /* Exakte Breitenberechnung */
+    border-radius: 5px;                         /* Abgerundete Kartenecken */
+    background: rgba(0, 0, 0, 0.4);            /* Glassmorphism-Hintergrund */
+    backdrop-filter: blur(2px);                 /* Minimaler Weichzeichner des Hintergrunds */
+    box-shadow: 
+        0 0 6px 0px rgba(161, 0, 184, 0.8),     /* Lila Neon-Glow */
+        0 0 15px 1px rgba(0, 119, 182, 0.5);    /* Blauer Neon-Glow */
+    overflow: hidden;                           /* Verhindert das Überstehen interner Elemente */
+    flex-grow: 1;                               /* Dehnt sich im Grid voll aus */
+    margin: 0.25em;                             /* Platz für den Neon-Glow */
+    margin-left: auto;                          /* Zentrierung */
+    margin-right: auto;                         /* Zentrierung */
+    width: 100%;                                /* Volle Spaltenbreite */
+}
+
+.wb_document {
+    flex-grow: 1;                               /* Nimmt den gesamten freien Platz im Editor ein */
+    padding: 30px;                              /* Großzügiger Schreib-Innenabstand */
+    color: #fff;                                /* Weiße Textfarbe beim Schreiben */
+    outline: none;                              /* Entfernt den Standard-Browserfokusrahmen */
+    overflow-y: auto;                           /* Erzeugt bei viel Text eine eigene Scrollbar */
+    font-size: 1rem;                            /* Standard-Schriftgröße */
+    line-height: 1.6;                           /* Lesefreundliche Zeilenschaltung */
+}
+
+.wb_document:empty:before {
+    content: attr(placeholder);                 /* Liest den Text aus dem HTML-Attribut 'placeholder' aus */
+    color: #6c7280;                             /* Graue Platzhalter-Textfarbe */
+    white-space: pre-wrap;                      /* Behält Zeilenumbrüche im Platzhalter bei */
+}
+
+/* PDF Leiste unten */
+.wb_pdf_bar {
+    background: rgba(0, 0, 0, 0.4);            /* Dunkler Transparenzhintergrund */
+    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Dezente Trennlinie zum Dokumenteneditor */
+    padding: 10px 16px;                         /* Innenabstand */
+    display: flex;                              /* Horizontale Flexbox */
+    gap: 10px;                                  /* Abstand zwischen PDF-Elementen */
+    align-items: center;                        /* Vertikale Ausrichtung */
+}
+
+.wb_pdf_container {
+    display: flex;                              /* Flexbox für angehängte PDF-Buttons */
+    gap: 8px;                                   /* Abstand zwischen den PDF-Buttons */
+    align-items: center;                        /* Ausrichtung */
+    flex-wrap: wrap;                            /* Bricht Buttons bei vielen PDFs automatisch um */
+}
+
+/* Gelbe Info-Boxen aus dem Wireframe */
+.wb_info_wrapper {
+    position: relative;                         /* Ankerpunkt für die gelben Notiz-Popups */
+}
+
+.wb_icon_btn {
+    width: 44px;                                /* Quadratische Buttonbreite */
+    height: 44px;                               /* Quadratische Buttonhöhe */
+    background: rgba(255, 255, 255, 0.05);      /* Leichtes Transparenzfeld */
+    border: 1px solid rgba(255, 255, 255, 0.15);/* Feine weiße Umrandung */
+    border-radius: 8px;                         /* Abgerundete Ecken */
+    color: #fff;                                /* Weiße Icon-Farbe */
+    font-size: 1.1rem;                          /* Icon-Skalierung */
+    display: flex;                              /* Flexbox zur Icon-Zentrierung */
+    align-items: center;                        /* Vertikale Zentrierung */
+    justify-content: center;                    /* Horizontale Zentrierung */
+    cursor: pointer;                            /* Klickzeiger */
+    transition: all 0.2s ease;                  /* Uebergangs-Animation bei Hover */
+}
+
+.wb_icon_btn:hover {
+    background: rgba(0, 240, 255, 0.15);        /* Cyanblaues Leuchten beim Drüberfahren */
+    border-color: #00f0ff;                      /* Rahmen wechselt zu Cyan */
+    color: #00f0ff;                             /* Icon-Farbe wechselt zu Cyan */
+}
+
+/* Popover-Positionierung (schwebendes Fenster) */
+.wb_popover_wrapper {
+    position: relative;                         /* Bezugspunkt für das aufploppende Menü */
+}
+
+.wb_popover {
+    display: none;                              /* Standardmäßig unsichtbar */
+    position: absolute;                         /* Schwebende Positionierung */
+    left: 55px;                                 /* Platzierung exakt rechts neben der Icon-Sidebar */
+    top: 0;                                     /* Ausrichtung an der Oberkante des Buttons */
+    background: rgba(15, 15, 20, 0.95);         /* Sehr dunkles, fast blickdichtes Glasfeld */
+    backdrop-filter: blur(8px);                 /* Starker Weichzeichner dahinter */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Helle Umrandung */
+    border-radius: 8px;                         /* Eckenrundung */
+    padding: 10px;                              /* Innenabstand */
+    z-index: 1000;                              /* Sehr hoher Z-Index damit es VOR dem Editor liegt */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);  /* Schlagschatten nach unten */
+}
+
+.wb_popover.active {
+    display: block;                             /* Macht das Popover sichtbar wenn die 'active'-Klasse gesetzt ist */
+}
+
+.wb_color_grid {
+    display: grid;                              /* Raster für Farbquadrate */
+    grid-template-columns: repeat(2, 28px);     /* Exakt 2 Spalten je 28px Breite */
+    gap: 6px;                                   /* Abstand zwischen den Farbfeldern */
+}
+
+.wb_color_box {
+    width: 28px;                                /* Quadratische Breite der Farbfelder */
+    height: 28px;                               /* Quadratische Höhe der Farbfelder */
+    border-radius: 4px;                         /* Leicht abgerundete Ecken */
+    cursor: pointer;                            /* Klickzeiger */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Heller Rand für gute Sichtbarkeit auf dunklem Grund */
+}
+
+.wb_shapes_grid {
+    display: flex;                              /* Flexbox für Formauswahl-Optionen */
+    flex-direction: column;                     /* Untereinander-Stapelung */
+    gap: 4px;                                   /* Enge Abstände */
+    width: 130px;                               /* Feste Breite der Formen-Auswahlliste */
+}
+
+.wb_shape_option {
+    background: rgba(255, 255, 255, 0.05);      /* Transparenter Optionshintergrund */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Feine Umrandung */
+    color: #fff;                                /* Weiße Schrift */
+    padding: 6px 8px;                          /* Innenabstand */
+    border-radius: 4px;                         /* Eckenrundung */
+    cursor: pointer;                            /* Klickzeiger */
+    text-align: left;                           /* Linksbündige Textausrichtung */
+    font-size: 0.8rem;                          /* Kompakte Schriftgröße */
+    display: flex;                              /* Flexbox zur Icon+Text-Ausrichtung */
+    align-items: center;                        /* Zentrierung */
+    gap: 8px;                                   /* Abstand zwischen Icon und Text */
+}
+
+.wb_shape_option:hover {
+    background: rgba(0, 240, 255, 0.15);        /* Cyanblaue Aufhellung beim Hovern */
+    color: #00f0ff;                             /* Text und Icon wechseln zu Cyan-Blau */
+}

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Startseite - vieazy{% endblock %}
+
+{% block content %}
+
+
+
+<div class="carousel_wrapper">
+    <!-- Pfeil Links (außerhalb) -->
+    <button class="carousel_btn prev_btn" id="prevBtn">&#10094;</button>
+
+    <!-- Das eigentliche Carousel mit Bildern -->
+    <div class="carousel_container">
+        <div class="carousel_track">
+            <div class="carousel_slide">
+                <img src="{% static 'image/vieazy_logo_komplett.png' %}" alt="VIEAZY Feature Vorschau 1" class="carousel_img">
+            </div>
+            <div class="carousel_slide">
+                <img src="{% static 'image/vieazy_logo_komplett.png' %}" alt="VIEAZY Feature Vorschau 2" class="carousel_img">
+            </div>
+            <div class="carousel_slide">
+                <img src="{% static 'image/vieazy_logo_komplett.png' %}" alt="VIEAZY Feature Vorschau 3" class="carousel_img">
+            </div>
+            <div class="carousel_slide">
+                <img src="{% static 'image/vieazy_logo_komplett.png' %}" alt="VIEAZY Feature Vorschau 4" class="carousel_img">
+            </div>
+        </div>
+    </div>
+
+    <!-- Pfeil Rechts (außerhalb) -->
+    <button class="carousel_btn next_btn" id="nextBtn">&#10095;</button>
+</div>
+
+
+
+
+
+
+<div class="box_container">
+<div class="cards_grid">
+    <!-- Erste Karte -->
+    <div class="ui_card">
+        <p class="card_heading">Was ist Vieazy?</p>
+        <p>
+            Vieazy ist mein erstes Projekt. Es ist eine all-in-one Web-Anwendung, die dir dabei hilft, deine alltäglichen Notizen, Aufgaben und Termine an einem zentralen Ort zu bündeln. Egal ob strukturierte Mitschriften aus Unterricht und Schulungen, visuelle Kanban-Boards für deine Projekte oder ein integrierter Kalender – Vieazy vereint die wichtigsten Produktivitäts-Tools unter einer übersichtlichen, benutzerfreundlichen Oberfläche.
+        </p>
+        <br>
+    </div>
+
+</div>
+</div>
+
+
+
+
+<script>
+    let currentIndex = 0;
+    const slides = document.querySelectorAll('.carousel_slide');
+    const track = document.querySelector('.carousel_track');
+
+    function updateCarousel() {
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+
+    document.getElementById('nextBtn').addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % slides.length;
+        updateCarousel();
+    });
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+        updateCarousel();
+    });
+
+    // Automatisches Weiterschalten (z. B. alle 5 Sekunden)
+    setInterval(() => {
+        currentIndex = (currentIndex + 1) % slides.length;
+        updateCarousel();
+    }, 15000);
+</script>
+
+
+
+
+
+
+{% endblock %}

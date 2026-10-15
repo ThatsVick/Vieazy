@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Startseite - vieazy{% endblock %}
+
+{% block content %}
+
+
+<div class="pricing_wrapper">
+    <!-- Header-Bereich oben links -->
+    <div class="pricing_header">
+        <h1 class="pricing_title">Aktuell komplett kostenlos</h1>
+        <h1 class="pricing_title"><s>Für nur 2,99€ Monatlich, ohne zusatzkosten</s></h1>
+    </div>
+
+    <!-- Haupt-Preiskarte im Glassmorphism-Look -->
+    <div class="ui_card">
+        <div class="pricing_card_inner">
+            <!-- Linke Spalte: Preis & Action Button -->
+            <div class="pricing_left">
+                <div class="price_display">
+                    <span class="price_amount"><s>2,99€</s></span>
+                    <span class="price_period">/ Monat</span>
+                </div>
+                
+                <a href="#" class="pricing_btn">Jetzt starten</a>
+                
+            </div>
+
+            <!-- Rechte Spalte: Feature-Liste -->
+            <div class="feature_list_wrapper">
+                <ul class="feature_list">
+                    <li>
+                        <span class="check_icon">✓</span>
+                        <span><strong>Notizen & Whiteboards:</strong> Beliebig viele Boards und Mitschriften</span>
+                    </li>
+                    <li>
+                        <span class="check_icon">✓</span>
+                        <span><strong>Kalender:</strong>Terminplanung und organisation ohne Einschränkungen.</span>
+                    </li>
+                    <li>
+                        <span class="check_icon">✓</span>
+                        <span><strong>PDF Viewer:</strong> Dokumente direkt in deinen Notizen betrachten.</span>
+                    </li>
+                    <li>
+                        <span class="check_icon">✓</span>
+                        <span><strong>Ordner-Manager:</strong> Alles übersichtlich an einem zentralen Ort gebündelt.</span>
+                    </li>
+                    <li>
+                        <span class="check_icon">✓</span>
+                        <span><strong>Monatlich kündbar:</strong> Maximale Flexibilität ohne lange Vertragsbindung.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Trennlinie & Hinweis unten -->
+        <div class="pricing_footer_note">
+            Der Preis bleibt! Es fallen keine zusatzkosten für dich an.
+        </div>
+    </div>
+</div>
+
+{% endblock %}

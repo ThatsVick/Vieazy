@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Startseite - vieazy{% endblock %}
+
+{% block content %}
+
+
+
+<div class="box_container">
+    
+    
+    <div class="form_ui_card">
+        <p class="card_heading">Hast du Fragen oder Feedback?</p>
+        <p class="form_subtext">Schreib uns – wir melden uns so schnell wie möglich bei dir.</p>
+
+        <form method="post" action="{% url 'kontakt' %}" class="neon_form">
+            {% csrf_token %}
+            
+            <div class="input_group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" placeholder="Dein Name" required class="form_input">
+            </div>
+
+            <div class="input_group">
+                <label for="email">E-Mail-Adresse</label>
+                <input type="email" id="email" name="email" placeholder="dein.name@beispiel.de" required class="form_input">
+            </div>
+
+            <div class="input_group">
+                <label for="name">Thema</label>
+                <input type="text" id="name" name="name" placeholder="Worum geht es" required class="form_input">
+            </div>
+
+            <div class="input_group">
+                <label for="message">Nachricht</label>
+                <textarea id="message" name="message" rows="5" placeholder="Deine Nachricht an uns..." required class="form_input form_textarea"></textarea>
+            </div>
+
+            <button type="submit" class="button_nav_sub">Nachricht senden</button>
+        </form>
+    </div>
+</div>
+
+
+
+{% endblock %}

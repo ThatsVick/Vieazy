@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Login - vieazy{% endblock %}
+
+{% block content %}
+<div class="box_container">
+    <div class="ui_card login_card">
+        
+        <h2 class="login_title">ANMELDEN</h2>
+
+        <form method="POST" action="{% url 'login' %}" class="login_form">
+            {% csrf_token %}
+
+            <!-- Fehlermeldung bei falschen Daten -->
+            {% if form.errors %}
+                <p style="color: #ff4d4d; text-align: center; margin: 0;">Benutzername oder Passwort falsch!</p>
+            {% endif %}
+
+            <div class="input_group">
+                <label for="id_username">Benutzername</label>
+                <input type="text" name="username" id="id_username" placeholder="Dein Benutzername" required>
+            </div>
+
+            <div class="input_group">
+                <label for="id_password">Passwort</label>
+                <input type="password" name="password" id="id_password" placeholder="Dein Passwort" required>
+            </div>
+
+            <!-- Absende-Button -->
+            <button type="submit" class="button_nav_sub">Anmelden</button>
+        </form>
+
+        <div class="login_footer">
+            <a href="#">Passwort vergessen?</a>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

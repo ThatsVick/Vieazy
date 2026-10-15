@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="wb_container" id="wbContainer">
+
+    <!-- KOPFZEILE -->
+    <div class="ui_card_wb_header">
+        <div class="wb_header_center">
+            <input type="text" class="wb_input_date" placeholder="Datum">
+            <input type="text" class="wb_input_theme" placeholder="Thema">
+            <input type="text" class="wb_input_tag" placeholder="Tags">
+        </div>
+
+        <div class="wb_header_right">
+            <div class="wb_info_wrapper">
+                <button type="button" class="button_nav">Speichern</button>
+            </div>
+            
+            <div class="wb_info_wrapper">
+                <button type="button" class="button_nav_sub">Speichern unter</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3-SPALTEN ARBEITSBEREICH -->
+    <div class="wb_workspace">
+        
+        <!-- LINKE SIDEBAR: PURISTISCHE ICON-LEISTE -->
+        <aside class="ui_card_wb_sidebar wb_sidebar_left">
+            
+            <!-- 1. Unendlich Feld -->
+            <div class="wb_info_wrapper">
+                <button type="button" class="wb_icon_btn" id="infiniteCanvasBtn" title="Unendlich Feld aktivieren">
+                    <i class="fa-solid fa-expand"></i>
+                </button>
+            </div>
+
+            <!-- 2. Sachen bewegen -->
+            <button type="button" class="wb_icon_btn" title="Sachen bewegen">
+                <i class="fa-solid fa-hand"></i>
+            </button>
+
+            <!-- 3. Notizblatt hinzufügen (mit Farb-Popover) -->
+            <div class="wb_popover_wrapper wb_info_wrapper">
+                <button type="button" class="wb_icon_btn" id="stickyNoteBtn" title="Notizblatt hinzufügen">
+                    <i class="fa-solid fa-note-sticky"></i>
+                </button>
+
+                <div class="wb_popover" id="stickyColorPopover">
+                    <div class="wb_color_grid">
+                        <div class="wb_color_box" style="background: #fff59d;" data-color="#fff59d"></div>
+                        <div class="wb_color_box" style="background: #ffe082;" data-color="#ffe082"></div>
+                        <div class="wb_color_box" style="background: #ffcc80;" data-color="#ffcc80"></div>
+                        <div class="wb_color_box" style="background: #ffab91;" data-color="#ffab91"></div>
+                        <div class="wb_color_box" style="background: #f48fb1;" data-color="#f48fb1"></div>
+                        <div class="wb_color_box" style="background: #ce93d8;" data-color="#ce93d8"></div>
+                        <div class="wb_color_box" style="background: #90caf9;" data-color="#90caf9"></div>
+                        <div class="wb_color_box" style="background: #80deea;" data-color="#80deea"></div>
+                        <div class="wb_color_box" style="background: #a5d6a7;" data-color="#a5d6a7"></div>
+                        <div class="wb_color_box" style="background: #ffffff;" data-color="#ffffff"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Textfeld -->
+            <button type="button" class="wb_icon_btn" title="Textfeld hinzufügen">
+                <i class="fa-solid fa-font"></i>
+            </button>
+
+            <!-- 5. Formen hinzufügen (mit Formen-Popover) -->
+            <div class="wb_popover_wrapper">
+                <button type="button" class="wb_icon_btn" id="shapesBtn" title="Formen hinzufügen">
+                    <i class="fa-solid fa-shapes"></i>
+                </button>
+
+                <div class="wb_popover" id="shapesPopover">
+                    <div class="wb_shapes_grid">
+                        <button type="button" class="wb_shape_option"><i class="fa-solid fa-minus"></i> Linie</button>
+                        <button type="button" class="wb_shape_option"><i class="fa-solid fa-arrow-right"></i> Pfeil</button>
+                        <button type="button" class="wb_shape_option"><i class="fa-solid fa-turn-down"></i> Gewinkelt</button>
+                        <button type="button" class="wb_shape_option"><i class="fa-solid fa-play"></i> Blockpfeil</button>
+                        <button type="button" class="wb_shape_option"><i class="fa-regular fa-square"></i> Rechteck</button>
+                        <button type="button" class="wb_shape_option"><i class="fa-regular fa-circle"></i> Oval</button>
+                        <button type="button" class="wb_shape_option"><i class="fa-solid fa-diamond"></i> Raute</button>
+                        <button type="button" class="wb_shape_option"><i class="fa-solid fa-caret-up"></i> Dreieck</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Bild hinzufügen -->
+            <button type="button" class="wb_icon_btn" title="Bild hinzufügen">
+                <i class="fa-solid fa-image"></i>
+            </button>
+
+            <!-- 7. PDF anhängen -->
+            <button type="button" class="wb_icon_btn" title="PDF anhängen">
+                <i class="fa-solid fa-file-pdf"></i>
+            </button>
+        </aside>
+
+        <!-- MITTE: DOKUMENT & PDF AREA -->
+        <main class="ui_card_wb_mainarea">
+            <div class="wb_document" contenteditable="true" placeholder="Text kommt später"></div>
+
+            <div class="wb_pdf_bar">
+                <div id="attachedPdfsList" class="wb_pdf_container"></div>
+                
+                <div class="wb_info_wrapper" style="margin-left: auto;">
+                    <span style="font-size: 0.8rem; color: #a0a5b5;">PDF-Bereich</span>
+                </div>
+            </div>
+        </main>
+
+        <!-- RECHTE SIDEBAR: TEXTFORMATIERUNG -->
+        <aside class="ui_card_wb_sidebar">
+            <div style="font-size: 0.85rem; font-weight: bold; color: #fff;">Textbearbeitung</div>
+            
+            <div class="wb_tool_row">
+                <button type="button" class="wb_tool_btn" style="width: 50%;">▲</button>
+                <button type="button" class="wb_tool_btn" style="width: 50%;">▼</button>
+            </div>
+            
+            <div style="display: flex; flex-direction: column; gap: 2px; font-size: 0.75rem; color: #a0a5b5; text-align: center; margin-bottom: 8px;">
+                <span>Small</span>
+                <span style="color: #00f0ff; font-weight: bold;">Normal</span>
+                <span>Large</span>
+                <span style="font-size: 0.9rem;">Huge</span>
+            </div>
+
+            <button type="button" class="wb_tool_btn" onclick="formatText('bold')"><b>B</b> Fett</button>
+            <button type="button" class="wb_tool_btn" onclick="formatText('italic')"><i>I</i> Kursiv</button>
+            <button type="button" class="wb_tool_btn" onclick="formatText('strikeThrough')"><s>M</s> Durchgestrichen</button>
+            <button type="button" class="wb_tool_btn" onclick="formatText('underline')"><u>A</u> Unterstrichen + Farbig</button>
+            <button type="button" class="wb_tool_btn"><span style="background: #ff7b7b; color: #000; padding: 0 4px;">A</span> Farbiger Hintergrund</button>
+            <button type="button" class="wb_tool_btn" onclick="formatText('insertUnorderedList')">☰ Aufzählung</button>
+            <button type="button" class="wb_tool_btn" onclick="formatText('justifyCenter')">≡ Ausrichtung</button>
+        </aside>
+
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Tools - vieazy{% endblock %}
+
+{% block content %}
+<div class="box_container">
+    <div class="ui_card">
+        
+        <!-- Header mit 4 Navigations-Buttons -->
+        <div class="tools_tab_header">
+            <button class="button_tool_nav active" onclick="switchMainTab(this, 'tab_info')">
+                <span>Info</span>
+            </button>
+            <button class="button_tool_nav" onclick="switchMainTab(this, 'tab_demo')">
+                <span>Direkt ausprobieren</span>
+            </button>
+            <button class="button_tool_nav" onclick="switchMainTab(this, 'ordner')">
+                <span>Ordner</span>
+            </button>
+            <button class="button_tool_nav" onclick="switchMainTab(this, 'demnächst')">
+                <span>Demnächst</span>
+            </button>
+        </div>
+
+        <!-- Hauptinhaltsbereich -->
+        <div class="tools_tab_body">
+            
+            <!-- ================= TAB 1: INFO BEREICH ================= -->
+            <div id="tab_info" class="main_tab_panel active">
+                <div class="info_grid">
+
+                     <div class="info_card">
+                        <h3>Interaktives Whiteboard</h3>
+                        <p>
+                            Freie Zeichenfläche & Notizen. Formatiere deine Mitschriften mit verschiedenen Schriftarten, Farben und Aufzählungen oder füge Bilder hinzu.
+                        </p>
+                    </div>
+
+                    <div class="info_card">
+                        <h3>Kanban & Aufgaben</h3>
+                        <p>
+                            Organisiere deine Aufgaben in übersichtlichen Spalten. Verschiebe Aufgaben von "Offen" bis "Erledigt" ganz einfach per Drag & Drop.
+                        </p>
+                    </div>
+
+                    
+                    <div class="info_card">
+                        <h3>Kalender & Terminplanung</h3>
+                        <p>
+                            Deine Schaltzentrale für Aufgaben und Termine. Neue Notizen werden automatisch mit deinem Kalender verknüpft und direkt am passenden Datum eingeordnet.
+                        </p>
+                    </div>
+
+                    <div class="info_card">
+                        <h3>Ordner & Dokumente</h3>
+                        <p>
+                            Behalte den Überblick über deine Dateien. Alles wird übersichtlich strukturiert an einem zentralen Ort gebündelt.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ================= TAB 2: DIREKT AUSPROBIEREN (DEMO PLATZHALTER) ================= -->
+            <div id="tab_demo" class="main_tab_panel">
+                <div class="tool_img_wrapper">
+                    <img src="{% static 'image/vieazy_logo_komplett.png' %}" alt="VIEAZY Vorschau 1" class="tool_img">
+                    <img src="{% static 'image/vieazy_logo_komplett.png' %}" alt="VIEAZY Vorschau 1" class="tool_img">
+                </div>
+            </div>
+
+            <!-- ================= TAB 3: Ordner (DEMO PLATZHALTER) ================= -->
+            <div id="ordner" class="main_tab_panel">
+                <div class="tool_img_wrapper">
+                    <img src="{% static 'image/vieazy_logo_komplett.png' %}" alt="VIEAZY Vorschau 1" class="tool_img">
+                    <img src="{% static 'image/vieazy_logo_komplett.png' %}" alt="VIEAZY Vorschau 1" class="tool_img">
+                </div>
+
+            </div>
+
+            <!-- ================= TAB 4: Demnächst (DEMO PLATZHALTER) ================= -->
+            <div id="demnächst" class="main_tab_panel">
+                <div class="tool_img_wrapper">
+                    <img src="{% static 'image/vieazy_logo_komplett.png' %}" alt="VIEAZY Vorschau 1" class="tool_img">
+                    <img src="{% static 'image/vieazy_logo_komplett.png' %}" alt="VIEAZY Vorschau 1" class="tool_img">
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function switchMainTab(clickedBtn, targetTabId) {
+        const body = document.querySelector('.tools_tab_body');
+        const targetPanel = document.getElementById(targetTabId);
+
+        if (!targetPanel || clickedBtn.classList.contains('active')) return;
+
+        // 1. Aktuelle Höhe fixieren (statt 'auto'), damit die Transition von einem konkreten Wert startet
+        body.style.height = body.offsetHeight + "px";
+
+        // Reflow erzwingen
+        body.offsetHeight;
+
+        // 2. Tab-Buttons zurücksetzen & neuen aktivieren
+        document.querySelectorAll('.button_tool_nav').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        clickedBtn.classList.add('active');
+
+        // 3. Panels umschalten
+        document.querySelectorAll('.main_tab_panel').forEach(panel => {
+            panel.classList.remove('active');
+        });
+        targetPanel.classList.add('active');
+
+        // 4. Die Höhe des NEUEN Panels messen und als neue Container-Höhe setzen
+        const newHeight = targetPanel.offsetHeight;
+        body.style.height = newHeight + "px";
+
+        // 5. Nach Ablauf der Animation (300ms) Höhe wieder auf 'auto' stellen
+        setTimeout(() => {
+            if (clickedBtn.classList.contains('active')) {
+                body.style.height = "auto";
+            }
+        }, 300);
+    }
+</script>
+
+{% endblock %}

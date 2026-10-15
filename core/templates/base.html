@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}vieazy{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="nav_bar">
+        <div class="nav_left_group">
+            <!-- Logo oben links -->
+            <a href="{% if user.is_authenticated %}{% url 'dashboard' %}{% else %}{% url 'index' %}{% endif %}">
+                <img src="{% static 'image/vieazy_logo_textonly.png' %}" alt="vieazy logo" class="brand_logo_img">
+            </a>
+
+            <!-- Mittlere Navigations-Links -->
+            <div class="nav_links_container">
+                {% if user.is_authenticated %}
+                    <!-- Eingeloggte Nutzer: VIP-Seiten -->
+                    <a href="{% url 'dashboard' %}" class="button_nav {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">Dashboard</a>
+                    <a href="{% url 'notiz_whiteboard' %}" class="button_nav {% if request.resolver_match.url_name == 'notiz_whiteboard' %}active{% endif %}">Noteboard</a>
+                    <a href="{% url 'kanban' %}" class="button_nav {% if request.resolver_match.url_name == 'kanban' %}active{% endif %}">Kanban</a>
+                    <a href="{% url 'ordner' %}" class="button_nav {% if request.resolver_match.url_name == 'ordner' %}active{% endif %}">Ordner</a>
+                    <a href="{% url 'kalender' %}" class="button_nav {% if request.resolver_match.url_name == 'kalender' %}active{% endif %}">Kalender</a>
+                    <a href="{% url 'einstellungen' %}" class="button_nav {% if request.resolver_match.url_name == 'einstellungen' %}active{% endif %}">Einstellungen</a>
+                {% else %}
+                    <!-- Öffentliche Seiten für Gäste -->
+                    <a href="{% url 'index' %}" class="button_nav {% if request.resolver_match.url_name == 'index' %}active{% endif %}">Home</a>
+                    <a href="{% url 'tools' %}" class="button_nav {% if request.resolver_match.url_name == 'tools' %}active{% endif %}">Tools</a>
+                    <a href="{% url 'preis' %}" class="button_nav {% if request.resolver_match.url_name == 'preis' %}active{% endif %}">Preise</a>
+                    <a href="{% url 'kontakt' %}" class="button_nav {% if request.resolver_match.url_name == 'kontakt' %}active{% endif %}">Kontakt</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Rechter Navigations-Bereich (Anmelden / Abmelden Button) -->
+        <div class="nav_right_group">
+            {% if user.is_authenticated %}
+                <!-- Unsichtbares Formular für den echten Logout -->
+                <form id="logoutForm" method="POST" action="{% url 'logout' %}" style="display: none;">
+                    {% csrf_token %}
+                </form>
+                <!-- Button öffnet das Custom Modal -->
+                <button type="button" class="button_nav" onclick="openLogoutModal()" style="font-family: inherit; font-size: inherit; cursor: pointer;">Abmelden</button>
+            {% else %}
+                <!-- Anmelden Button für Gäste -->
+                <a href="{% url 'login' %}" class="button_nav {% if request.resolver_match.url_name == 'login' %}active{% endif %}">Anmelden</a>
+            {% endif %}
+        </div>
+
+        
+
+    </header>
+
+    <!-- Hauptinhaltsbereich -->
+    <main class="main_wrapper">
+        {% block content %}
+        <!-- In den jeweiligen Templates gefüllter Inhalt -->
+        {% endblock %}
+    </main>
+
+    <!-- Footer am Seitenende -->
+    <footer class="app_footer">
+        <nav class="footer_nav">
+            <a href="#" class="footer_link">Impressum</a>
+            <a href="#" class="footer_link">Haftungsausschluss</a>
+            <a href="#" class="footer_link">AGB</a>
+        </nav>
+    </footer>
+
+    <!-- Custom Cyberpunk Logout Modal -->
+    <div id="logoutModal" class="modal_overlay" style="display: none;">
+        <div class="ui_card modal_card">
+            <h3 style="margin-top: 0; color: #fff;">Abmelden?</h3>
+            <p style="color: #b3b3b3; margin-bottom: 24px;">Möchtest du den VIP-Bereich wirklich verlassen?</p>
+            <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                <button type="button" class="button_nav_sub" onclick="closeLogoutModal()">Abbrechen</button>
+                <button type="button" class="button_nav_sub" onclick="document.getElementById('logoutForm').submit();">Ja, Abmelden</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Steuerungsskript für das Modal -->
+    <script>
+        function openLogoutModal() {
+            document.getElementById('logoutModal').style.display = 'flex';
+        }
+
+        function closeLogoutModal() {
+            document.getElementById('logoutModal').style.display = 'none';
+        }
+
+        // Modal schließen, wenn man außerhalb der Karte klickt
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('logoutModal');
+            if (event.target === modal) {
+                closeLogoutModal();
+            }
+        });
+    </script>
+
+
+
+<script src="{% static 'js/script.js' %}"></script>
+
+</body>
+</html>

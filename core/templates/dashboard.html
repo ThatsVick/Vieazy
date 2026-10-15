@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+ <!-- Dashboard Header Card (clock weather dashboard = cwd) -->
+<div class="ui_card_cwd">
+    
+    <!-- Live Uhrzeit & Datum -->
+    <div class="header_widget_box clock_widget_box">
+        <div id="clock" class="clock_time">--:--</div>
+        <div id="date" class="clock_date">--.--.----</div>
+    </div>
+
+
+    <!-- Begrüßung & Name -->
+    <div class="greeting_box">
+        <h1 class="greeting_title">
+            <span id="greeting_text">Guten Tag</span>, {{ request.user.username|default:"Operator" }}!
+        </h1>
+        <p class="greeting_subtitle">Systeme sind hoch gefahren. Bereit los zu legen</p>
+    </div>
+
+
+    
+    <!-- Wetter Widget (ohne Modal, pure Anzeige) -->
+    <div class="header_widget_box">
+        <span id="weather_icon" class="weather_icon">☀️</span>
+        <div>
+            <div id="weather_temp" class="weather_temp">-- °C</div>
+            <div class="weather_city_wrapper">
+                <span id="weather_city" class="weather_city_text">Berlin</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+        
+
+{% endblock %}
