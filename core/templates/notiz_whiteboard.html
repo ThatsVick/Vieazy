@@ -19,7 +19,7 @@
             </div>
             
             <div class="wb_info_wrapper">
-                <button type="button" class="button_nav_sub">Speichern unter</button>
+                <button type="button" class="button_nav">Speichern unter</button>
             </div>
         </div>
     </div>
@@ -28,7 +28,7 @@
     <div class="wb_workspace">
         
         <!-- LINKE SIDEBAR: PURISTISCHE ICON-LEISTE -->
-        <aside class="ui_card_wb_sidebar wb_sidebar_left">
+        <aside class="ui_card_wb_sidebar">
             
             <!-- 1. Unendlich Feld -->
             <div class="wb_info_wrapper">
@@ -114,31 +114,152 @@
         </main>
 
         <!-- RECHTE SIDEBAR: TEXTFORMATIERUNG -->
-        <aside class="ui_card_wb_sidebar">
-            <div style="font-size: 0.85rem; font-weight: bold; color: #fff;">Textbearbeitung</div>
-            
-            <div class="wb_tool_row">
-                <button type="button" class="wb_tool_btn" style="width: 50%;">▲</button>
-                <button type="button" class="wb_tool_btn" style="width: 50%;">▼</button>
-            </div>
-            
-            <div style="display: flex; flex-direction: column; gap: 2px; font-size: 0.75rem; color: #a0a5b5; text-align: center; margin-bottom: 8px;">
-                <span>Small</span>
-                <span style="color: #00f0ff; font-weight: bold;">Normal</span>
-                <span>Large</span>
-                <span style="font-size: 0.9rem;">Huge</span>
-            </div>
-
-            <button type="button" class="wb_tool_btn" onclick="formatText('bold')"><b>B</b> Fett</button>
-            <button type="button" class="wb_tool_btn" onclick="formatText('italic')"><i>I</i> Kursiv</button>
-            <button type="button" class="wb_tool_btn" onclick="formatText('strikeThrough')"><s>M</s> Durchgestrichen</button>
-            <button type="button" class="wb_tool_btn" onclick="formatText('underline')"><u>A</u> Unterstrichen + Farbig</button>
-            <button type="button" class="wb_tool_btn"><span style="background: #ff7b7b; color: #000; padding: 0 4px;">A</span> Farbiger Hintergrund</button>
-            <button type="button" class="wb_tool_btn" onclick="formatText('insertUnorderedList')">☰ Aufzählung</button>
-            <button type="button" class="wb_tool_btn" onclick="formatText('justifyCenter')">≡ Ausrichtung</button>
-        </aside>
-
+        <!-- Rechte Sidebar -->
+<div class="ui_card_wb_sidebar">
+    
+    <!-- Größe ändern -->
+    <div class="wb_sidebar_item">
+        <button id="btn_size" class="wb_icon_btn" onclick="togglePopup('popup_size')">
+            <i class="fas fa-text-height"></i>
+        </button>
+        <!-- Pop-up: Größe -->
+        <div id="popup_size" class="wb_tool_popup wb_hidden">
+            <button class="wb_popup_btn wb_font_small" onclick="formatText('fontSize', 1)">Small</button>
+            <button class="wb_popup_btn wb_font_normal" onclick="formatText('fontSize', 3)">Normal</button>
+            <button class="wb_popup_btn wb_font_large" onclick="formatText('fontSize', 5)">Large</button>
+            <button class="wb_popup_btn wb_font_huge" onclick="formatText('fontSize', 7)">Huge</button>
+        </div>
     </div>
+
+    <!-- Text-Stile -->
+    <div class="wb_sidebar_item">
+        <button class="wb_icon_btn" onclick="formatText('bold')"><i class="fas fa-bold"></i></button>
+    </div>
+    <div class="wb_sidebar_item">
+        <button class="wb_icon_btn" onclick="formatText('italic')"><i class="fas fa-italic"></i></button>
+    </div>
+    <div class="wb_sidebar_item">
+        <button class="wb_icon_btn" onclick="formatText('underline')"><i class="fas fa-underline"></i></button>
+    </div>
+
+<!-- Hintergrundfarbe mit Reset-Button -->
+<div class="wb_sidebar_item">
+    <button id="btn_color" class="wb_icon_btn" onclick="togglePopup('popup_color')">
+        <i class="fas fa-highlighter wb_highlight_icon"></i>
+    </button>
+    <div id="popup_color" class="wb_tool_popup wb_hidden">
+        <!-- Button für Keine Farbe / Transparent -->
+        <button class="wb_color_reset_btn" onclick="applyHighlight('transparent')">
+            <i class="fas fa-ban"></i> Zurücksetzten
+        </button>
+        <div class="wb_color_palette_grid">
+            <!-- Grundfarben / Graustufen -->
+            <button class="wb_color_square" style="background: #000000;" onclick="applyHighlight('#000000')"></button>
+            <button class="wb_color_square" style="background: #ff0000;" onclick="applyHighlight('#ff0000')"></button>
+            <button class="wb_color_square" style="background: #ffaa00;" onclick="applyHighlight('#ffaa00')"></button>
+            <button class="wb_color_square" style="background: #ffff00;" onclick="applyHighlight('#ffff00')"></button>
+            <button class="wb_color_square" style="background: #00aa00;" onclick="applyHighlight('#00aa00')"></button>
+            <button class="wb_color_square" style="background: #0088ff;" onclick="applyHighlight('#0088ff')"></button>
+            <button class="wb_color_square" style="background: #9900ff;" onclick="applyHighlight('#9900ff')"></button>
+
+            <!-- Helle Töne -->
+            <button class="wb_color_square" style="background: #ffffff;" onclick="applyHighlight('#ffffff')"></button>
+            <button class="wb_color_square" style="background: #ffcccc;" onclick="applyHighlight('#ffcccc')"></button>
+            <button class="wb_color_square" style="background: #ffe5cc;" onclick="applyHighlight('#ffe5cc')"></button>
+            <button class="wb_color_square" style="background: #ffffcc;" onclick="applyHighlight('#ffffcc')"></button>
+            <button class="wb_color_square" style="background: #ccffcc;" onclick="applyHighlight('#ccffcc')"></button>
+            <button class="wb_color_square" style="background: #cce5ff;" onclick="applyHighlight('#cce5ff')"></button>
+            <button class="wb_color_square" style="background: #e5ccff;" onclick="applyHighlight('#e5ccff')"></button>
+
+            <!-- Mittlere Töne -->
+            <button class="wb_color_square" style="background: #aaaaaa;" onclick="applyHighlight('#aaaaaa')"></button>
+            <button class="wb_color_square" style="background: #ff6666;" onclick="applyHighlight('#ff6666')"></button>
+            <button class="wb_color_square" style="background: #ffcc66;" onclick="applyHighlight('#ffcc66')"></button>
+            <button class="wb_color_square" style="background: #ffff66;" onclick="applyHighlight('#ffff66')"></button>
+            <button class="wb_color_square" style="background: #66cc66;" onclick="applyHighlight('#66cc66')"></button>
+            <button class="wb_color_square" style="background: #66b2ff;" onclick="applyHighlight('#66b2ff')"></button>
+            <button class="wb_color_square" style="background: #b266ff;" onclick="applyHighlight('#b266ff')"></button>
+
+            <!-- Dunkle Töne -->
+            <button class="wb_color_square" style="background: #555555;" onclick="applyHighlight('#555555')"></button>
+            <button class="wb_color_square" style="background: #990000;" onclick="applyHighlight('#990000')"></button>
+            <button class="wb_color_square" style="background: #996600;" onclick="applyHighlight('#996600')"></button>
+            <button class="wb_color_square" style="background: #888800;" onclick="applyHighlight('#888800')"></button>
+            <button class="wb_color_square" style="background: #006600;" onclick="applyHighlight('#006600')"></button>
+            <button class="wb_color_square" style="background: #0044cc;" onclick="applyHighlight('#0044cc')"></button>
+            <button class="wb_color_square" style="background: #550099;" onclick="applyHighlight('#550099')"></button>
+        </div>
+    </div>
+</div>
+
+<!-- Textfarbe mit Reset-Button -->
+<div class="wb_sidebar_item">
+    <button id="btn_textcolor" class="wb_icon_btn" onclick="togglePopup('popup_textcolor')">
+        <i class="fas fa-font wb_textcolor_icon"></i>
+    </button>
+    <div id="popup_textcolor" class="wb_tool_popup wb_hidden">
+        <!-- Button für Standard-Textfarbe -->
+        <button class="wb_color_reset_btn" onclick="applyTextColor('inherit')">
+            <i class="fas fa-ban"></i> Zurücksetzen
+        </button>
+        <div class="wb_color_palette_grid">
+            <!-- Grundfarben / Graustufen -->
+            <button class="wb_color_square" style="background: #ffffff;" onclick="applyTextColor('#ffffff')"></button>
+            <button class="wb_color_square" style="background: #000000;" onclick="applyTextColor('#000000')"></button>
+            <button class="wb_color_square" style="background: #ff0000;" onclick="applyTextColor('#ff0000')"></button>
+            <button class="wb_color_square" style="background: #ffaa00;" onclick="applyTextColor('#ffaa00')"></button>
+            <button class="wb_color_square" style="background: #ffff00;" onclick="applyTextColor('#ffff00')"></button>
+            <button class="wb_color_square" style="background: #00aa00;" onclick="applyTextColor('#00aa00')"></button>
+            <button class="wb_color_square" style="background: #0088ff;" onclick="applyTextColor('#0088ff')"></button>
+
+            <!-- Helle Töne -->
+            <button class="wb_color_square" style="background: #aaaaaa;" onclick="applyTextColor('#aaaaaa')"></button>
+            <button class="wb_color_square" style="background: #ffcccc;" onclick="applyTextColor('#ffcccc')"></button>
+            <button class="wb_color_square" style="background: #ffe5cc;" onclick="applyTextColor('#ffe5cc')"></button>
+            <button class="wb_color_square" style="background: #ffffcc;" onclick="applyTextColor('#ffffcc')"></button>
+            <button class="wb_color_square" style="background: #ccffcc;" onclick="applyTextColor('#ccffcc')"></button>
+            <button class="wb_color_square" style="background: #cce5ff;" onclick="applyTextColor('#cce5ff')"></button>
+            <button class="wb_color_square" style="background: #e5ccff;" onclick="applyTextColor('#e5ccff')"></button>
+
+            <!-- Mittlere Töne -->
+            <button class="wb_color_square" style="background: #666666;" onclick="applyTextColor('#666666')"></button>
+            <button class="wb_color_square" style="background: #ff6666;" onclick="applyTextColor('#ff6666')"></button>
+            <button class="wb_color_square" style="background: #ffcc66;" onclick="applyTextColor('#ffcc66')"></button>
+            <button class="wb_color_square" style="background: #ffff66;" onclick="applyTextColor('#ffff66')"></button>
+            <button class="wb_color_square" style="background: #66cc66;" onclick="applyTextColor('#66cc66')"></button>
+            <button class="wb_color_square" style="background: #66b2ff;" onclick="applyTextColor('#66b2ff')"></button>
+            <button class="wb_color_square" style="background: #b266ff;" onclick="applyTextColor('#b266ff')"></button>
+
+            <!-- Dunkle Töne -->
+            <button class="wb_color_square" style="background: #333333;" onclick="applyTextColor('#333333')"></button>
+            <button class="wb_color_square" style="background: #990000;" onclick="applyTextColor('#990000')"></button>
+            <button class="wb_color_square" style="background: #996600;" onclick="applyTextColor('#996600')"></button>
+            <button class="wb_color_square" style="background: #888800;" onclick="applyTextColor('#888800')"></button>
+            <button class="wb_color_square" style="background: #006600;" onclick="applyTextColor('#006600')"></button>
+            <button class="wb_color_square" style="background: #0044cc;" onclick="applyTextColor('#0044cc')"></button>
+            <button class="wb_color_square" style="background: #550099;" onclick="applyTextColor('#550099')"></button>
+        </div>
+    </div>
+</div>
+
+    <!-- Aufzählung -->
+    <div class="wb_sidebar_item">
+        <button class="wb_icon_btn" onclick="formatText('insertUnorderedList')"><i class="fas fa-list-ul"></i></button>
+    </div>
+
+    <!-- Formatierung (Links, Mittig, Rechts) -->
+    <div class="wb_sidebar_item">
+        <button id="btn_align" class="wb_icon_btn" onclick="togglePopup('popup_align')">
+            <i class="fas fa-align-center"></i>
+        </button>
+        <!-- Pop-up: Formatierung -->
+        <div id="popup_align" class="wb_tool_popup wb_hidden">
+            <button class="wb_popup_btn" onclick="formatText('justifyLeft')"><i class="fas fa-align-left"></i> Links</button>
+            <button class="wb_popup_btn" onclick="formatText('justifyCenter')"><i class="fas fa-align-center"></i> Mittig</button>
+            <button class="wb_popup_btn" onclick="formatText('justifyRight')"><i class="fas fa-align-right"></i> Rechts</button>
+        </div>
+    </div>
+
 </div>
 
 

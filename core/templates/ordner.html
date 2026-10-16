@@ -4,9 +4,83 @@
 {% block title %}Ordner{% endblock %}
 
 {% block content %}
+<!-- NAVBAR (Suche nach Thema / Tags) -->
+<header class="wb_folder_navbar">
+    <h1 class="page_title">Ordner</h1>
+    
+    <div class="wb_folder_search_wrapper">
+        <select id="wb_search_filter" class="wb_folder_select">
+            <option value="all">Suche nach...</option>
+            <option value="theme">Thema</option>
+            <option value="tag">Tags</option>
+        </select>
+        <input type="text" id="wb_folder_searchbar" placeholder="Suchen..." onkeyup="handleSearch()">
+    </div>
+</header>
 
-        
-        <h1 class="page_title">Ordner</h1>
-        
+<!-- MAIN CONTAINER FOR LAYERS -->
+<div class="wb_folder_main">
 
+    <!-- EBENE 1: Hauptübersicht (Ordner-Grid) -->
+    <section id="wb_layer_1" class="wb_layer">
+        <div class="wb_folder_toolbar">
+            <button class="wb_folder_add_btn" onclick="addNewFolder()">
+                <i class="fas fa-plus"></i> Ordner hinzufügen
+            </button>
+        </div>
+
+        <div class="wb_grid_container" id="wb_main_folder_grid">
+            <!-- Fester Archiv-Ordner -->
+            <div class="wb_card_item wb_archive_type" onclick="goToLayer2()">
+                <div class="wb_card_icon"><i class="fas fa-archive"></i></div>
+                <div class="wb_card_title">Archiv</div>
+            </div>
+            <!-- Eigene Ordner werden hier per JS eingefügt -->
+        </div>
+    </section>
+
+    <!-- EBENE 2: Jahre & Monate -->
+    <section id="wb_layer_2" class="wb_layer wb_hidden_layer">
+        <div class="wb_folder_toolbar">
+            <!-- Zurück-Icon zu Ebene 1 -->
+            <button class="wb_folder_back_btn" onclick="goToLayer1()" title="Zurück">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <span class="wb_layer_title">Archiv</span>
+        </div>
+
+        <!-- Raster für Jahre und Monate -->
+        <div class="wb_grid_container" id="wb_archive_months_grid">
+            <!-- Dynamische Monate per JS -->
+        </div>
+    </section>
+
+    <!-- EBENE 3: Tage / Dateien / Notizen -->
+    <section id="wb_layer_3" class="wb_layer wb_hidden_layer">
+        <div class="wb_folder_toolbar">
+            <!-- Zurück-Icon zu Ebene 2 -->
+            <button class="wb_folder_back_btn" onclick="goToLayer2()" title="Zurück">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <span id="wb_layer3_title" class="wb_layer_title">Notizen</span>
+        </div>
+
+        <!-- Raster für Notiz-Cards -->
+        <div class="wb_grid_container" id="wb_notes_grid">
+            <!-- Dynamische Notizen per JS -->
+        </div>
+    </section>
+
+</div>
+
+<!-- MODAL / POPUP FÜR THUMBNAIL-VORSCHAU -->
+<div id="wb_preview_modal" class="wb_modal_overlay wb_hidden_layer" onclick="closePreviewModal()">
+    <div class="wb_modal_content" onclick="event.stopPropagation()">
+        <span class="wb_modal_close" onclick="closePreviewModal()">&times;</span>
+        <img id="wb_modal_img" src="" alt="Notiz Vorschau">
+    </div>
+</div>
+
+<!-- Einbinden deines dedizierten Skripts über Django static -->
+<script src="{% static 'js/ordner.js' %}"></script>
 {% endblock %}
