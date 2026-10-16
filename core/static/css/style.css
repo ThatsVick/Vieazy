@@ -1127,6 +1127,7 @@ p {
     margin-left: auto;                          /* Zentrierung */
     margin-right: auto;                         /* Zentrierung */
     width: 100%;                                /* Volle Spaltenbreite */
+    z-index: -1;
 }
 
 .wb_document {
