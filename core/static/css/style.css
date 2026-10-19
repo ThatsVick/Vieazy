@@ -1613,3 +1613,96 @@ p {
     color: #666;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
+
+/* Positionierung für benutzerdefinierte Ordner-Cards */
+.wb_custom_type {
+    position: relative;
+}
+
+/* Löschen-Icon auf dem Ordner oben rechts */
+.wb_folder_delete_btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: color 0.2s, background-color 0.2s;
+}
+
+.wb_folder_delete_btn:hover {
+    color: #ff4a4a;
+    background: rgba(255, 74, 74, 0.15);
+}
+
+/* Modal Card & Layout */
+.wb_folder_modal_card {
+    background: #1e293b;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.wb_modal_title {
+    margin-top: 0;
+    color: #ffffff;
+    font-size: 1.1rem;
+}
+
+.wb_folder_input_field {
+    width: 100%;
+    padding: 8px 12px;
+    margin: 15px 0;
+    border-radius: 4px;
+    border: 1px solid #334155;
+    background: #0f172a;
+    color: #ffffff;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.wb_folder_input_field:focus {
+    border-color: #00f0ff;
+}
+
+/* Modal Buttons */
+.wb_modal_btn_group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.wb_btn_confirm {
+    background: #00f0ff;
+    color: #000000;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.wb_btn_confirm:hover {
+    background: #00c8d6;
+}
+
+.wb_btn_cancel {
+    background: #334155;
+    color: #ffffff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.wb_btn_cancel:hover {
+    background: #475569;
+}

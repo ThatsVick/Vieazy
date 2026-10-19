@@ -24,7 +24,7 @@
     <!-- EBENE 1: Hauptübersicht (Ordner-Grid) -->
     <section id="wb_layer_1" class="wb_layer">
         <div class="wb_folder_toolbar">
-            <button class="wb_folder_add_btn" onclick="addNewFolder()">
+            <button class="button_nav_sub" onclick="addNewFolder()">
                 <i class="fas fa-plus"></i> Ordner hinzufügen
             </button>
         </div>
@@ -55,21 +55,26 @@
         </div>
     </section>
 
-    <!-- EBENE 3: Tage / Dateien / Notizen -->
-    <section id="wb_layer_3" class="wb_layer wb_hidden_layer">
-        <div class="wb_folder_toolbar">
-            <!-- Zurück-Icon zu Ebene 2 -->
-            <button class="wb_folder_back_btn" onclick="goToLayer2()" title="Zurück">
-                <i class="fas fa-arrow-left"></i>
-            </button>
-            <span id="wb_layer3_title" class="wb_layer_title">Notizen</span>
-        </div>
+<!-- EBENE 3: Tage / Dateien / Notizen & Unterordner -->
+<section id="wb_layer_3" class="wb_layer wb_hidden_layer">
+    <div class="wb_folder_toolbar">
+        <!-- Zurück-Icon springt genau 1 Ebene höher -->
+        <button class="wb_folder_back_btn" onclick="goOneLevelUp()" title="Zurück">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <span id="wb_layer3_title" class="wb_layer_title">Notizen</span>
+        
+        <!-- Button zum Erstellen von Unterordnern innerhalb dieses Ordners -->
+        <button class="button_nav_sub" onclick="addNewFolder()" style="margin-left: auto;">
+            <i class="fas fa-plus"></i> Unterordner hinzufügen
+        </button>
+    </div>
 
-        <!-- Raster für Notiz-Cards -->
-        <div class="wb_grid_container" id="wb_notes_grid">
-            <!-- Dynamische Notizen per JS -->
-        </div>
-    </section>
+    <!-- Raster für Unterordner und Notiz-Cards -->
+    <div class="wb_grid_container" id="wb_notes_grid">
+        <!-- Dynamischer Inhalt per JS -->
+    </div>
+</section>
 
 </div>
 
@@ -81,6 +86,20 @@
     </div>
 </div>
 
-<!-- Einbinden deines dedizierten Skripts über Django static -->
-<script src="{% static 'js/ordner.js' %}"></script>
+<!-- INPUT MODAL FÜR NEUEN ORDNER -->
+<div id="wb_folder_input_modal" class="wb_modal_overlay wb_hidden_layer">
+    <div class="wb_modal_content wb_folder_modal_card">
+        <h3 class="wb_modal_title">Neuer Ordner</h3>
+        <input type="text" id="wb_new_folder_input" class="wb_folder_input_field" placeholder="Ordnername...">
+        <div class="wb_modal_btn_group">
+            <button type="button" class="wb_btn_confirm" onclick="confirmAddNewFolder()">Erstellen</button>
+            <button type="button" class="wb_btn_cancel" onclick="closeFolderInputModal()">Abbrechen</button>
+        </div>
+    </div>
+</div>
+
+<!-- Richtige JS-Datei einbinden -->
+<script src="{% static 'js/script.js' %}"></script>
+
+
 {% endblock %}

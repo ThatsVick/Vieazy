@@ -4,11 +4,9 @@ document.addEventListener("DOMContentLoaded", function() {
     function updateClockAndGreeting() {
         const now = new Date();
         
-        // Uhrzeit formatieren (HH:MM)
         const hours = String(now.getHours()).padStart(2, '0');
         const minutes = String(now.getMinutes()).padStart(2, '0');
 
-        // Datum formatieren
         const options = { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' };
         const dateString = now.toLocaleDateString('de-DE', options).replace(',', '');
 
@@ -19,7 +17,6 @@ document.addEventListener("DOMContentLoaded", function() {
         if (clockEl) clockEl.innerText = `${hours}:${minutes}`;
         if (dateEl) dateEl.innerText = dateString;
 
-        // Begrüßung nach Tageszeit
         if (greetingEl) {
             const currentHour = now.getHours();
             let greeting = "Guten Tag";
@@ -38,7 +35,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    // Uhrzeit sofort laden & jede Sekunde aktualisieren
     updateClockAndGreeting();
     setInterval(updateClockAndGreeting, 1000);
 
@@ -99,12 +95,10 @@ document.addEventListener("DOMContentLoaded", function() {
         btn.addEventListener("click", function(e) {
             e.stopPropagation();
             
-            // Alle anderen offenen Popovers schließen
             document.querySelectorAll('.wb_popover').forEach(p => {
                 if (p !== popover) p.classList.remove('active');
             });
 
-            // Aktuelles Popover umschalten
             popover.classList.toggle('active');
         });
     }
@@ -112,7 +106,6 @@ document.addEventListener("DOMContentLoaded", function() {
     setupPopover("stickyNoteBtn", "stickyColorPopover");
     setupPopover("shapesBtn", "shapesPopover");
 
-    // Klick außerhalb schließt linke Popovers
     document.addEventListener("click", function(e) {
         if (!e.target.closest('.wb_popover_wrapper')) {
             document.querySelectorAll('.wb_popover').forEach(p => {
@@ -123,8 +116,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     // --- 4. POPUP & SIDEBAR EVENT LISTENER (RECHTE SIDEBAR) ---
-    
-    // Schließt rechte Pop-ups, wenn man außerhalb klickt
     document.addEventListener('click', function(event) {
         if (!event.target.closest('.wb_sidebar_item')) {
             document.querySelectorAll('.wb_tool_popup').forEach(popup => {
@@ -133,7 +124,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    // Verhindert Fokus-Verlust beim Klicken auf Buttons & Farbfelder
     const focusPreventSelectors = '.wb_icon_btn, .wb_popup_btn, .wb_color_square, .wb_color_reset_btn';
     document.querySelectorAll(focusPreventSelectors).forEach(button => {
         button.addEventListener('mousedown', function(event) {
@@ -141,19 +131,19 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    // Garantiert Fokus beim Klick in den Schreibbereich
     const wbDoc = document.querySelector('.wb_document');
     if (wbDoc) {
         wbDoc.addEventListener('click', function() {
             this.focus();
         });
     }
+
+    // Initialisierung der Haupt-Ordneransicht
+    renderLayer1Folders();
 });
 
 
-// --- 5. GLOBALE HELFER-FUNKTIONEN (Müssen außerhalb stehen, da sie per onclick im HTML aufgerufen werden) ---
-
-// Pop-ups der rechten Sidebar umschalten
+// --- 5. GLOBALE EDITOR HELFER-FUNKTIONEN ---
 function togglePopup(popupId) {
     document.querySelectorAll('.wb_tool_popup').forEach(popup => {
         if (popup.id !== popupId) {
@@ -167,41 +157,35 @@ function togglePopup(popupId) {
     }
 }
 
-// Universal-Funktion für Textformatierungen
 function formatText(command, value = null) {
     document.execCommand(command, false, value);
-    
     document.querySelectorAll('.wb_tool_popup').forEach(popup => {
         popup.classList.add('wb_hidden');
     });
 }
 
-// Texthintergrund ändern
 function applyHighlight(color) {
     document.execCommand('hiliteColor', false, color);
     document.execCommand('backColor', false, color);
-
     document.querySelectorAll('.wb_tool_popup').forEach(popup => {
         popup.classList.add('wb_hidden');
     });
 }
 
-// Textfarbe ändern
 function applyTextColor(color) {
     const targetColor = (color === 'inherit') ? '#ffffff' : color;
     document.execCommand('foreColor', false, targetColor);
-
     document.querySelectorAll('.wb_tool_popup').forEach(popup => {
         popup.classList.add('wb_hidden');
     });
 }
 
 
+// --- 6. SPEICHER & BREADCRUMB-NAVIGATION ---
 
+let customFolders = JSON.parse(localStorage.getItem('wb_custom_folders')) || [];
 
-
-// Beispieldaten-Speicher (Simuliert gespeicherte Notizen)
-let savedNotes = [
+let savedNotes = JSON.parse(localStorage.getItem('wb_saved_notes')) || [
     {
         id: 1,
         date: "2026-10-16",
@@ -209,84 +193,114 @@ let savedNotes = [
         month: "Oktober",
         theme: "Projekt Whiteboard",
         tags: ["CSS", "JS", "Design"],
+        folder: "Archiv",
         thumbnail: "https://via.placeholder.com/300x180/00f0ff/000000?text=Notiz+16.10"
     }
 ];
 
-let customFolders = JSON.parse(localStorage.getItem('wb_custom_folders')) || ["Privat", "Arbeit"];
+// Pfad-Array für genaue Ebenen-Rückverfolgung (Breadcrumbs)
+let currentPath = [];
 
-document.addEventListener("DOMContentLoaded", function() {
+
+// --- NAVIGATION ZWISCHEN DEN EBENEN ---
+
+function goOneLevelUp() {
+    if (currentPath.length > 0) {
+        currentPath.pop(); // Entfernt den aktuellen Ordner aus dem Pfad
+        
+        if (currentPath.length === 0) {
+            goToLayer1();
+        } else {
+            const parentFolder = currentPath[currentPath.length - 1];
+            openCustomFolderNotes(parentFolder, true);
+        }
+    } else {
+        goToLayer1();
+    }
+}
+
+function goToLayer1() {
+    currentPath = [];
+    document.getElementById('wb_layer_1')?.classList.remove('wb_hidden_layer');
+    document.getElementById('wb_layer_2')?.classList.add('wb_hidden_layer');
+    document.getElementById('wb_layer_3')?.classList.add('wb_hidden_layer');
     renderLayer1Folders();
-});
+}
 
-// --- EBENE 1 LOGIK ---
+function goToLayer2() {
+    document.getElementById('wb_layer_1')?.classList.add('wb_hidden_layer');
+    document.getElementById('wb_layer_2')?.classList.remove('wb_hidden_layer');
+    document.getElementById('wb_layer_3')?.classList.add('wb_hidden_layer');
+    renderLayer2Archive();
+}
+
+function goToLayer3(monthYearName) {
+    document.getElementById('wb_layer_2')?.classList.add('wb_hidden_layer');
+    document.getElementById('wb_layer_3')?.classList.remove('wb_hidden_layer');
+    
+    const titleEl = document.getElementById('wb_layer3_title');
+    if (titleEl) titleEl.innerText = `Archiv: ${monthYearName}`;
+    
+    renderLayer3Content(monthYearName, true);
+}
+
+function openCustomFolderNotes(folderName, isBackNavigation = false) {
+    if (!isBackNavigation) {
+        if (currentPath[currentPath.length - 1] !== folderName) {
+            currentPath.push(folderName);
+        }
+    }
+
+    document.getElementById('wb_layer_1')?.classList.add('wb_hidden_layer');
+    document.getElementById('wb_layer_2')?.classList.add('wb_hidden_layer');
+    document.getElementById('wb_layer_3')?.classList.remove('wb_hidden_layer');
+    
+    const titleEl = document.getElementById('wb_layer3_title');
+    if (titleEl) titleEl.innerText = `Ordner: ${currentPath.join(' / ')}`;
+    
+    renderLayer3Content(folderName, false);
+}
+
+
+// --- RENDERING-LOGIK (EBENE 1, 2 UND 3) ---
+
 function renderLayer1Folders() {
     const grid = document.getElementById('wb_main_folder_grid');
-    
-    // Nur benutzerdefinierte Ordner neu rendern (Archiv bleibt fest)
+    if (!grid) return;
+
     const existingCustom = grid.querySelectorAll('.wb_custom_type');
     existingCustom.forEach(el => el.remove());
 
-    customFolders.forEach((folderName, index) => {
+    // Zeigt nur Ordner ohne Überordner (Root-Ebene)
+    const rootFolders = customFolders.filter(f => typeof f === 'string' || !f.parent);
+
+    rootFolders.forEach((folder) => {
+        const folderName = typeof folder === 'object' ? folder.name : folder;
         const card = document.createElement('div');
         card.className = 'wb_card_item wb_custom_type';
         card.innerHTML = `
             <div class="wb_card_icon"><i class="fas fa-folder"></i></div>
             <div class="wb_card_title">${folderName}</div>
+            <button class="wb_folder_delete_btn" onclick="deleteFolder(event, '${folderName}')" title="Ordner löschen">
+                <i class="fas fa-times"></i>
+            </button>
         `;
-        // Klick auf eigenen Ordner führt direkt zu dessen Notizen (Ebene 3)
         card.onclick = () => openCustomFolderNotes(folderName);
         grid.appendChild(card);
     });
 }
 
-function addNewFolder() {
-    const name = prompt("Wie soll der neue Ordner heißen?");
-    if (name && name.trim() !== "") {
-        customFolders.push(name.trim());
-        localStorage.setItem('wb_custom_folders', JSON.stringify(customFolders));
-        renderLayer1Folders();
-    }
-}
-
-// --- NAVIGATION ZWISCHEN DEN EBENEN ---
-function goToLayer1() {
-    document.getElementById('wb_layer_1').classList.remove('wb_hidden_layer');
-    document.getElementById('wb_layer_2').classList.add('wb_hidden_layer');
-    document.getElementById('wb_layer_3').classList.add('wb_hidden_layer');
-}
-
-function goToLayer2() {
-    document.getElementById('wb_layer_1').classList.add('wb_hidden_layer');
-    document.getElementById('wb_layer_2').classList.remove('wb_hidden_layer');
-    document.getElementById('wb_layer_3').classList.add('wb_hidden_layer');
-    renderLayer2Archive();
-}
-
-function goToLayer3(monthName) {
-    document.getElementById('wb_layer_2').classList.add('wb_hidden_layer');
-    document.getElementById('wb_layer_3').classList.remove('wb_hidden_layer');
-    document.getElementById('wb_layer3_title').innerText = `Notizen - ${monthName}`;
-    renderLayer3Notes(monthName);
-}
-
-function openCustomFolderNotes(folderName) {
-    document.getElementById('wb_layer_1').classList.add('wb_hidden_layer');
-    document.getElementById('wb_layer_3').classList.remove('wb_hidden_layer');
-    document.getElementById('wb_layer3_title').innerText = `Ordner: ${folderName}`;
-    renderLayer3Notes(folderName);
-}
-
-// --- EBENE 2 LOGIK (ARCHIV / MONATE) ---
 function renderLayer2Archive() {
     const monthsGrid = document.getElementById('wb_archive_months_grid');
+    if (!monthsGrid) return;
+    
     monthsGrid.innerHTML = "";
 
-    // Zeigt nur Monate an, in denen auch tatsächlich Notizen vorhanden sind
-    const activeMonths = [...new Set(savedNotes.map(note => `${note.month} ${note.year}`))];
+    const archiveNotes = savedNotes.filter(n => n.folder === "Archiv" || !n.folder);
+    const activeMonths = [...new Set(archiveNotes.map(note => `${note.month} ${note.year}`))];
 
     if (activeMonths.length === 0) {
-        monthsGrid.innerHTML = "<p>Keine archivierten Notizen vorhanden.</p>";
+        monthsGrid.innerHTML = "<p style='color:#888; grid-column: 1/-1;'>Keine archivierten Notizen vorhanden.</p>";
         return;
     }
 
@@ -302,18 +316,47 @@ function renderLayer2Archive() {
     });
 }
 
-// --- EBENE 3 LOGIK (NOTIZEN / TAGE) ---
-function renderLayer3Notes(filter) {
+function renderLayer3Content(currentFolderName, isArchive) {
     const notesGrid = document.getElementById('wb_notes_grid');
+    if (!notesGrid) return;
+    
     notesGrid.innerHTML = "";
 
-    savedNotes.forEach(note => {
+    // 1. Unterordner für den aktuellen Ordner laden und anzeigen
+    if (!isArchive) {
+        const subFolders = customFolders.filter(f => typeof f === 'object' && f.parent === currentFolderName);
+
+        subFolders.forEach((sub) => {
+            const card = document.createElement('div');
+            card.className = 'wb_card_item wb_custom_type';
+            card.innerHTML = `
+                <div class="wb_card_icon"><i class="fas fa-folder"></i></div>
+                <div class="wb_card_title">${sub.name}</div>
+                <button class="wb_folder_delete_btn" onclick="deleteFolder(event, '${sub.name}')" title="Ordner löschen">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            card.onclick = () => openCustomFolderNotes(sub.name);
+            notesGrid.appendChild(card);
+        });
+    }
+
+    // 2. Notizen in diesem Ordner laden und anzeigen
+    const filteredNotes = savedNotes.filter(note => {
+        if (isArchive) {
+            return `${note.month} ${note.year}` === currentFolderName;
+        } else {
+            return note.folder === currentFolderName;
+        }
+    });
+
+    filteredNotes.forEach(note => {
         const card = document.createElement('div');
         card.className = 'wb_note_card_box';
         card.innerHTML = `
             <div class="wb_note_header_row">
                 <span class="wb_note_theme_text">${note.theme}</span>
-                <i class="fas fa-tags wb_tag_trigger_icon" onclick="showTags('${note.tags.join(', ')}')"></i>
+                <i class="fas fa-tags wb_tag_trigger_icon" onclick="showTags('${(note.tags || []).join(', ')}')"></i>
             </div>
             
             <div class="wb_note_thumb_container" onclick="openPreviewModal('${note.thumbnail}')">
@@ -323,32 +366,131 @@ function renderLayer3Notes(filter) {
             <div class="wb_note_action_row">
                 <button class="wb_action_icon_btn" title="Teilen" onclick="shareAction()"><i class="fas fa-share-alt"></i></button>
                 <button class="wb_action_icon_btn" title="Bearbeiten" onclick="editAction(${note.id})"><i class="fas fa-edit"></i></button>
-                <button class="wb_action_icon_btn" title="Löschen" onclick="deleteAction(${note.id})"><i class="fas fa-trash"></i></button>
+                <button class="wb_action_icon_btn" title="Löschen" onclick="deleteNoteAction(${note.id})"><i class="fas fa-trash"></i></button>
                 <button class="wb_action_icon_btn" title="Download" onclick="downloadAction(${note.id})"><i class="fas fa-download"></i></button>
             </div>
         `;
         notesGrid.appendChild(card);
     });
+
+    // Platzhaltertext, wenn Ordner komplett leer ist
+    const hasSubFolders = !isArchive && customFolders.some(f => typeof f === 'object' && f.parent === currentFolderName);
+    if (!hasSubFolders && filteredNotes.length === 0) {
+        notesGrid.innerHTML = "<p style='color:#888; grid-column: 1/-1;'>Dieser Ordner ist leer.</p>";
+    }
 }
 
-// --- MODAL & TAG POPUP ---
+
+// --- ORDNER POPUP & MANAGEMENT FUNKTIONEN ---
+
+function addNewFolder() {
+    const modal = document.getElementById('wb_folder_input_modal');
+    const input = document.getElementById('wb_new_folder_input');
+    if (modal && input) {
+        input.value = "";
+        modal.classList.remove('wb_hidden_layer');
+        input.focus();
+    }
+}
+
+function closeFolderInputModal() {
+    const modal = document.getElementById('wb_folder_input_modal');
+    if (modal) modal.classList.add('wb_hidden_layer');
+}
+
+function confirmAddNewFolder() {
+    const input = document.getElementById('wb_new_folder_input');
+    if (!input) return;
+
+    const name = input.value;
+    if (name && name.trim() !== "") {
+        const cleanName = name.trim();
+        const currentParent = currentPath.length > 0 ? currentPath[currentPath.length - 1] : null;
+
+        // Ordner-Objekt mit Verknüpfung zum Eltern-Ordner erstellen
+        const newFolderObj = {
+            name: cleanName,
+            parent: currentParent
+        };
+
+        // Prüfen, ob der Ordnername in dieser Ebene bereits existiert
+        const exists = customFolders.some(f => {
+            const fName = typeof f === 'object' ? f.name : f;
+            const fParent = typeof f === 'object' ? f.parent : null;
+            return fName.toLowerCase() === cleanName.toLowerCase() && fParent === currentParent;
+        });
+
+        if (exists || cleanName.toLowerCase() === "archiv") {
+            alert("Ein Ordner mit diesem Namen existiert hier bereits!");
+            return;
+        }
+
+        customFolders.push(newFolderObj);
+        localStorage.setItem('wb_custom_folders', JSON.stringify(customFolders));
+
+        if (currentParent) {
+            openCustomFolderNotes(currentParent, true);
+        } else {
+            renderLayer1Folders();
+        }
+        
+        closeFolderInputModal();
+    }
+}
+
+function deleteFolder(event, folderName) {
+    event.stopPropagation();
+    
+    if (confirm(`Möchtest du den Ordner "${folderName}" wirklich löschen?`)) {
+        // Entfernt den Ordner sowie alle enthaltenen Unterordner
+        customFolders = customFolders.filter(f => {
+            const fName = typeof f === 'object' ? f.name : f;
+            const fParent = typeof f === 'object' ? f.parent : null;
+            return fName !== folderName && fParent !== folderName;
+        });
+
+        localStorage.setItem('wb_custom_folders', JSON.stringify(customFolders));
+
+        if (currentPath.length > 0) {
+            const currentParent = currentPath[currentPath.length - 1];
+            openCustomFolderNotes(currentParent, true);
+        } else {
+            renderLayer1Folders();
+        }
+    }
+}
+
+
+// --- POPUPS & NOTIZ-AKTIONEN ---
+
 function openPreviewModal(imgUrl) {
-    document.getElementById('wb_modal_img').src = imgUrl;
-    document.getElementById('wb_preview_modal').classList.remove('wb_hidden_layer');
+    const imgEl = document.getElementById('wb_modal_img');
+    const modalEl = document.getElementById('wb_preview_modal');
+    if (imgEl && modalEl) {
+        imgEl.src = imgUrl;
+        modalEl.classList.remove('wb_hidden_layer');
+    }
 }
 
 function closePreviewModal() {
-    document.getElementById('wb_preview_modal').classList.add('wb_hidden_layer');
+    const modalEl = document.getElementById('wb_preview_modal');
+    if (modalEl) modalEl.classList.add('wb_hidden_layer');
 }
 
 function showTags(tagsString) {
-    alert("Genutzte Tags: " + tagsString);
+    alert("Genutzte Tags: " + (tagsString || "Keine Tags angegeben"));
 }
 
-// --- AKTIONEN ---
+function deleteNoteAction(id) {
+    if (confirm("Möchtest du diese Notiz wirklich löschen?")) {
+        savedNotes = savedNotes.filter(n => n.id !== id);
+        localStorage.setItem('wb_saved_notes', JSON.stringify(savedNotes));
+        goOneLevelUp();
+    }
+}
+
 function shareAction() { alert("Teilen-Funktion folgt bald!"); }
 function editAction(id) { window.location.href = "index.html"; }
-function deleteAction(id) { alert("Notiz gelöscht!"); }
 function downloadAction(id) { alert("Download gestartet..."); }
 
 function handleSearch() {
